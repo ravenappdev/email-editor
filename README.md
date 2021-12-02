@@ -2,13 +2,13 @@
 
 A lightweight email editor to embed in your SaaS application. It is built on craft.js that provides a drag-n-drop system and handles the way user components should be rendered, updated, and moved. It is entirely server-side rendered, improving user experience.
 
-![Optional Text](../main/public/email_template.png)
-
 ## Installation
 
 To use Email Editor download [this](https://gist.github.com/priyansh-ravenapp/8357c2ca8a24e26ba87ab5dbaaef69cb.js) file and include it in your local repository.
 
 ## Usage
+
+![Optional Text](public/email_template.png)
 
 ```
 import React, { useState, useCallback } from "react";
