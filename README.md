@@ -48,21 +48,22 @@ function App() {
 
   return (
     <div style={{ height: "100vh" }}>
-      <nav>
+      <nav style={{ height: "8%", borderBottom: "1px solid #a39f9f" }}>
         <button
           onClick={onEditorSave}
           style={{
             float: "right",
             margin: "10px 20px 10px 10px",
-            padding: "10px 30px",
-            color: "#5850EC",
+            padding: "10px 40px",
+            color: "white",
             border: "1px solid rgba(88, 80, 236, 0.5)",
-            fontSize: "1.075rem",
-            backgroundColor: "white",
+            fontSize: "0.875rem",
+            backgroundColor: "#5850EC",
             borderRadius: "4px",
+            cursor: "pointer",
           }}
         >
-          Save
+          SAVE
         </button>
       </nav>
       <div style={{ height: "92%" }}>
@@ -78,6 +79,7 @@ function App() {
 }
 
 export default App;
+
 
 
 ```
