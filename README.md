@@ -4,7 +4,9 @@ A lightweight email editor to embed in your SaaS application. It is built on cra
 
 ## Installation
 
-To use Email Editor download [this](https://gist.github.com/priyansh-ravenapp/8357c2ca8a24e26ba87ab5dbaaef69cb.js) file and include it in your local repository.
+To use Email Editor include this in your local repository.
+
+<script src=“https://gist.github.com/priyansh-ravenapp/8357c2ca8a24e26ba87ab5dbaaef69cb.js”></script>
 
 ## Usage
 
@@ -15,7 +17,6 @@ import React, { useState, useCallback } from "react";
 import EmailEditor from "./EmailEditor";
 
 function App() {
-
   const [savedState, setSavedState] = useState({ state: "", html: "" });
   const [fetchState, setFetchState] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
@@ -54,12 +55,16 @@ function App() {
             float: "right",
             margin: "10px 20px 10px 10px",
             padding: "10px 30px",
+            color: "#5850EC",
+            border: "1px solid rgba(88, 80, 236, 0.5)",
+            fontSize: "1.075rem",
+            backgroundColor: "white",
+            borderRadius: "4px",
           }}
         >
           Save
         </button>
       </nav>
-
       <div style={{ height: "92%" }}>
         <EmailEditor
           state={savedState.state}
@@ -73,6 +78,7 @@ function App() {
 }
 
 export default App;
+
 
 ```
 
