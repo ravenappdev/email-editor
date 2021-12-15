@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, Button as MaterialButton } from "@material-ui/core";
+import { Box, Button as MaterialButton, Link } from "@material-ui/core";
 import { Grid } from "../Grid";
 export const ButtonExport = ({ props, id, parentStyle, style, ...rest }) => {
     //bgimage/bgcolor
@@ -19,19 +19,18 @@ export const ButtonExport = ({ props, id, parentStyle, style, ...rest }) => {
                 parentStyleCopy
             )}
         >
-            <form action={props.path} target="_blank" style={{ display: "inline" }}>
-                <MaterialButton
-                    type="submit"
-                    style={Object.assign(
-                        {
-                            display: "inline-block"
-                        },
-                        style
-                    )}
-                >
-                    {props.text}
-                </MaterialButton>
-            </form>
+            <MaterialButton
+                href={props.path}
+                target="_blank"
+                style={Object.assign(
+                    {
+                        display: "inline-block"
+                    },
+                    style
+                )}
+            >
+                {props.text}
+            </MaterialButton>
         </Grid>
     );
 };
