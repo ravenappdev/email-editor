@@ -24,6 +24,7 @@
         "cors": "^2.8.5",
         "cssjson": "^2.1.3",
         "ejs": "^2.7.4",
+        "env-cmd": "^10.1.0",
         "eslint-plugin-mdx": "^1.14.1",
         "express": "^4.17.1",
         "extract-inline-css": "^1.0.1",
