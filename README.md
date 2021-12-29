@@ -14,6 +14,10 @@ npm i raven-react-email-editor
 
 Checkout the example usage here - https://github.com/ravenappdev/react-email-editor
 
+## Live Demo
+
+Checkout the demo app here - https://email-editor-demo-mu.vercel.app/
+
 ## Documentation
 
 -   [Run Locally](https://prachi-choudhary.gitbook.io/email-editor-1/)
