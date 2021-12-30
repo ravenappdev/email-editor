@@ -16,7 +16,7 @@ Checkout the example usage here - https://github.com/ravenappdev/react-email-edi
 
 ## Live Demo
 
-Checkout the demo app here - https://email-editor-demo-mu.vercel.app/
+Checkout the demo app here - https://email-editor-demo-blue.vercel.app/
 
 ## Documentation
 
