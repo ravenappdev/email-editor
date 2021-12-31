@@ -1,0 +1,174 @@
+pre {
+  border-radius: 4px;
+  background-color: #191c27;
+  padding: 16px;
+  font-size: 14px;
+  margin-bottom: 24px
+}
+
+code[class*="language-"],
+pre[class*="language-"] {
+  color: rgb(191, 199, 213);
+  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: 1em;
+  margin: .5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+}
+
+:not(pre) > code[class*="language-"],
+pre[class*="language-"] {
+  background: #1d1f21;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+}
+
+.token.prolog {
+  color: rgb(0, 0, 128);
+}
+
+.token.parameter {
+  color: rgb(255, 255, 255);
+}
+
+.token.comment {
+  color: rgb(106, 153, 85);
+}
+
+.token.doctype {
+  color: rgb(191, 199, 213);
+}
+
+.token.cdata {
+  color: rgb(191, 199, 213);
+}
+
+.token.punctuation {
+  color: rgb(136, 198, 190);
+}
+
+.token.property {
+  color: rgb(252, 146, 158);
+}
+
+.token.tag {
+  color: rgb(252, 146, 158);
+}
+
+.token.class-name {
+  color: rgb(250, 200, 99);
+}
+
+.token.boolean {}
+
+.token.constant {
+  color: rgb(100, 102, 149);
+}
+
+.token.symbol {
+  color: rgb(141, 200, 145);
+}
+
+.token.deleted {
+  color: rgb(141, 200, 145);
+}
+
+.token.number {
+  color: rgb(181, 206, 168);
+}
+
+.token.inserted {
+  color: rgb(181, 206, 168);
+}
+
+.token.selector {
+  color: rgb(215, 186, 125);
+}
+
+.token.char {
+  color: rgb(209, 105, 105);
+}
+
+.token.builtin {
+  color: rgb(197, 165, 197);
+}
+
+.token.changed {
+  color: rgb(197, 165, 197);
+}
+
+.token.keyword {
+  color: rgb(197, 165, 197);
+}
+
+.token.string{
+  color: rgb(195, 232, 141);
+}
+
+.token.attr-name {
+  color: rgb(156, 220, 254);
+}
+
+.token.variable {
+  color: rgb(156, 220, 254);
+}
+
+.token.operator {
+  color: #EDEDED;
+}
+
+.token.entity {
+  color: #FFFFB6;
+  cursor: help;
+}
+
+.token.url {
+  color: #96CBFE;
+}
+
+.language-css .token.string,
+.style .token.string {
+  color: #87C38A;
+}
+
+.token.atrule,
+.token.attr-value {
+  color: #F9EE98;
+}
+
+.token.function {
+  color: rgb(121, 182, 242)
+}
+
+.token.regex {
+  color: #E9C062;
+}
+
+.token.important {
+  color: #fd971f;
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
