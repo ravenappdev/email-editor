@@ -8,24 +8,24 @@ import { toJSON, toCSS } from "cssjson";
 import extract from "extract-inline-css";
 
 function splitCSS(css) {
-    const json = toJSON(css)["children"];
-    let styles = "";
-    Object.entries(json).map(([key, value]) => {
-        const obj = {
-            children: {
-                [key]: value
-            }
-        };
-        styles += `
+  const json = toJSON(css)["children"];
+  let styles = "";
+  Object.entries(json).map(([key, value]) => {
+    const obj = {
+      children: {
+        [key]: value,
+      },
+    };
+    styles += `
             <style type="text/css">
                 ${toCSS(obj)}
             </style>
         `;
-    });
-    return styles;
+  });
+  return styles;
 }
 function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
-    return `
+  return `
     <!DOCTYPE HTML PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
       <head>
@@ -87,26 +87,26 @@ function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
 }
 
 export function handleRender(req, res) {
-    const sheets = new ServerStyleSheets();
-    const { jsx, bodyBgColor, bodyBgImage } = generateJSX(req.body.app);
-    // Render the component to a string.
-    const html = ReactDOMServer.renderToString(
-        sheets.collect(
-            <ThemeProvider theme={createTheme()}>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
+  const sheets = new ServerStyleSheets();
+  const { jsx, bodyBgColor, bodyBgImage } = generateJSX(req.body.app);
+  // Render the component to a string.
+  const html = ReactDOMServer.renderToString(
+    sheets.collect(
+      <ThemeProvider theme={createTheme()}>
+        {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+        <CssBaseline />
 
-                <>{jsx}</>
-                {/* {deserialize(req.body.app)} */}
-            </ThemeProvider>
-        )
-    );
+        <>{jsx}</>
+        {/* {deserialize(req.body.app)} */}
+      </ThemeProvider>
+    )
+  );
 
-    // Grab the CSS from our sheets.
-    const css = sheets.toString();
+  // Grab the CSS from our sheets.
+  const css = sheets.toString();
 
-    res.statusCode = 200;
-    res.setHeader("content-type", "text/plain");
-    // Send the rendered page back to the client.
-    res.send(renderFullPage(html, css, bodyBgColor, bodyBgImage));
+  res.statusCode = 200;
+  res.setHeader("content-type", "text/plain");
+  // Send the rendered page back to the client.
+  res.send(renderFullPage(html, css, bodyBgColor, bodyBgImage));
 }
