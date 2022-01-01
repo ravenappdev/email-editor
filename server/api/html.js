@@ -18,7 +18,7 @@ const allowCors = (fn) => async (req, res) => {
 };
 
 const handler = (req, res) => {
-  const response = processor(req.body.app);
+  const response = processor.processor(req.body.app);
   res.statusCode = 200;
   res.setHeader("content-type", "text/plain");
   // Send the rendered page back to the client.
