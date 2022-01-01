@@ -6,6 +6,7 @@ import e from "cors";
 const app = express();
 app.use(e({ origin: true, credentials: true }));
 app.use(bodyParser.json());
+
 app.post("/api/html", (req, res) => {
   const response = handleRender(req.body.app);
   res.statusCode = 200;
