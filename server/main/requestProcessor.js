@@ -86,9 +86,9 @@ function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
   `;
 }
 
-export default function handleRender(req, res) {
+export default function handleRender(app) {
   const sheets = new ServerStyleSheets();
-  const { jsx, bodyBgColor, bodyBgImage } = generateJSX(req.body.app);
+  const { jsx, bodyBgColor, bodyBgImage } = generateJSX(app);
   // Render the component to a string.
   const html = ReactDOMServer.renderToString(
     sheets.collect(
@@ -104,9 +104,5 @@ export default function handleRender(req, res) {
 
   // Grab the CSS from our sheets.
   const css = sheets.toString();
-
-  res.statusCode = 200;
-  res.setHeader("content-type", "text/plain");
-  // Send the rendered page back to the client.
-  res.send(renderFullPage(html, css, bodyBgColor, bodyBgImage));
+  return renderFullPage(html, css, bodyBgColor, bodyBgImage);
 }
