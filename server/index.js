@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import { handleRender } from "./requestProcessor.js";
+import { handleRender } from "./main/requestProcessor.js";
 import e from "cors";
 
 const app = express();

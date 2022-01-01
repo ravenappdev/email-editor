@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "vercel-build": "npm run build-processor",
     "build-server": "webpack --config webpack.server.js",
+    "build-processor": "webpack --config webpack.processor.js",
     "dev-start": "npm run build-server && nodemon ./server-build/index.js",
     "prod-start": "npm run react-build && npm run build-server && node ./server-build/index.js"
   },
