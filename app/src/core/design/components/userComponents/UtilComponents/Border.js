@@ -11,7 +11,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-function Border({ propKey, propName, setProp, props, styleProp }) {
+function Border({ propKey, propName, setProp, props, styleProp, type }) {
     const classes = useStyles();
     const borderStylesOpts = ["Solid", "Dotted", "Dashed"];
     const tmp = props[styleProp][propKey];
@@ -19,16 +19,29 @@ function Border({ propKey, propName, setProp, props, styleProp }) {
     width = width && width !== "" ? width : "0px";
     style = style && style !== "" ? style : "solid";
     color = color && color !== "" ? color : "#000000";
+
     const selectedValue = borderStylesOpts.filter(opts => opts.toLowerCase() === style);
+
     const handleSetProp = () => {
         setProp(props => {
             if (propName === "All Sides") {
-                props[styleProp]["borderTop"] = width + " " + style + " " + color + " ";
-                props[styleProp]["borderBottom"] = width + " " + style + " " + color + " ";
-                props[styleProp]["borderRight"] = width + " " + style + " " + color + " ";
-                props[styleProp]["borderLeft"] = width + " " + style + " " + color + " ";
+                if (type === "outlined" && width === "0px") {
+                    props[styleProp]["borderTop"] = null;
+                    props[styleProp]["borderBottom"] = null;
+                    props[styleProp]["borderRight"] = null;
+                    props[styleProp]["borderLeft"] = null;
+                } else {
+                    props[styleProp]["borderTop"] = width + " " + style + " " + color + " ";
+                    props[styleProp]["borderBottom"] = width + " " + style + " " + color + " ";
+                    props[styleProp]["borderRight"] = width + " " + style + " " + color + " ";
+                    props[styleProp]["borderLeft"] = width + " " + style + " " + color + " ";
+                }
             } else {
-                props[styleProp][propKey] = width + " " + style + " " + color + " ";
+                if (type === "outlined" && width === "0px") {
+                    props[styleProp][propKey] = null;
+                } else {
+                    props[styleProp][propKey] = width + " " + style + " " + color + " ";
+                }
             }
         });
     };
@@ -80,7 +93,7 @@ function Border({ propKey, propName, setProp, props, styleProp }) {
     );
 }
 
-export function BorderComponent({ props, setProp, styleProp }) {
+export function BorderComponent({ props, setProp, styleProp, type }) {
     const classes = useStyles();
     const handleOptionChange = () => {
         let value = props[styleProp].borderTop;
@@ -123,6 +136,7 @@ export function BorderComponent({ props, setProp, styleProp }) {
                                     setProp={setProp}
                                     props={props}
                                     styleProp={styleProp}
+                                    type={type}
                                 />
                                 <Box flexGrow={1} />
                                 <Border
@@ -131,6 +145,7 @@ export function BorderComponent({ props, setProp, styleProp }) {
                                     setProp={setProp}
                                     props={props}
                                     styleProp={styleProp}
+                                    type={type}
                                 />
                             </Box>
                             <Box display="flex" alignItems="center">
@@ -140,6 +155,7 @@ export function BorderComponent({ props, setProp, styleProp }) {
                                     setProp={setProp}
                                     props={props}
                                     styleProp={styleProp}
+                                    type={type}
                                 />
                                 <Box flexGrow={1} />
                                 <Border
@@ -148,6 +164,7 @@ export function BorderComponent({ props, setProp, styleProp }) {
                                     setProp={setProp}
                                     props={props}
                                     styleProp={styleProp}
+                                    type={type}
                                 />
                             </Box>
                         </>
@@ -158,6 +175,7 @@ export function BorderComponent({ props, setProp, styleProp }) {
                             setProp={setProp}
                             props={props}
                             styleProp={styleProp}
+                            type={type}
                         />
                     )}
                 </Box>

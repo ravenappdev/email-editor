@@ -1,4 +1,12 @@
-import { TextField, MenuItem, Switch, Box, Slider } from "@material-ui/core";
+import {
+    TextField,
+    MenuItem,
+    Switch,
+    Box,
+    Slider,
+    Button as MaterialButton,
+    Link
+} from "@material-ui/core";
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
@@ -94,7 +102,14 @@ export function BorderAccordion({ props, setProp, styleProp }) {
                     </Box>
                 )
             }
-            children={<BorderComponent props={props} setProp={setProp} styleProp={styleProp} />}
+            children={
+                <BorderComponent
+                    props={props}
+                    setProp={setProp}
+                    styleProp={styleProp}
+                    type={props.style.variant}
+                />
+            }
         />
     );
 }
@@ -241,6 +256,105 @@ export function ActionAccordion({ props, setProp }) {
                             </MenuItem>
                         </TextField>
                     </Box>
+                </>
+            }
+        />
+    );
+}
+export function ButtonSizeAccordion({ props, setProp }) {
+    const handleClick = value => {
+        setProp(props => {
+            props.style.size = value;
+        });
+    };
+    return (
+        <CustomAccordion
+            title="Button Size"
+            defaultExpanded="false"
+            preview={
+                <Box px={1} bgcolor="#f1f1f1" borderRadius={5}>
+                    <Typography variant="caption" color="textSecondary">
+                        {props.style.size}
+                    </Typography>
+                </Box>
+            }
+            children={
+                <>
+                    <MaterialButton
+                        onClick={() => handleClick("small")}
+                        size={"small"}
+                        variant={"contained"}
+                        style={{ margin: "5px" }}
+                    >
+                        Small
+                    </MaterialButton>
+                    <MaterialButton
+                        onClick={() => handleClick("medium")}
+                        size={"medium"}
+                        variant={"contained"}
+                        style={{ margin: "5px" }}
+                    >
+                        Medium
+                    </MaterialButton>
+                    <MaterialButton
+                        onClick={() => handleClick("large")}
+                        size={"large"}
+                        variant={"contained"}
+                        style={{ margin: "5px" }}
+                    >
+                        Large
+                    </MaterialButton>
+                </>
+            }
+        />
+    );
+}
+export function ButtonVariantAccordion({ props, setProp }) {
+    const handleClick = value => {
+        setProp(props => {
+            props.style.variant = value;
+        });
+    };
+    return (
+        <CustomAccordion
+            title="Button Variant"
+            defaultExpanded="false"
+            preview={
+                <Box px={1} bgcolor="#f1f1f1" borderRadius={5}>
+                    {props.style.variant === "text" ? (
+                        <Typography variant="caption" color="textSecondary">
+                            {"default"}
+                        </Typography>
+                    ) : (
+                        <Typography variant="caption" color="textSecondary">
+                            {props.style.variant}
+                        </Typography>
+                    )}
+                </Box>
+            }
+            children={
+                <>
+                    <MaterialButton
+                        onClick={() => handleClick("text")}
+                        variant="text"
+                        style={{ margin: "1px" }}
+                    >
+                        Default
+                    </MaterialButton>
+                    <MaterialButton
+                        onClick={() => handleClick("contained")}
+                        variant="contained"
+                        style={{ margin: "2px" }}
+                    >
+                        Contained
+                    </MaterialButton>
+                    <MaterialButton
+                        onClick={() => handleClick("outlined")}
+                        variant="outlined"
+                        style={{ margin: "2px" }}
+                    >
+                        Outlined
+                    </MaterialButton>
                 </>
             }
         />

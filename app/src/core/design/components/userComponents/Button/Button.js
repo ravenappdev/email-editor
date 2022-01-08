@@ -13,7 +13,6 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
     if (parentStyleCopy.backgroundImage !== "") {
         parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
     }
-
     return (
         <Grid
             item
@@ -48,6 +47,8 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
             <MaterialButton
                 href={props.path}
                 target="_blank"
+                size={style.size}
+                variant={style.variant}
                 style={Object.assign(
                     {
                         display: "inline-block"
