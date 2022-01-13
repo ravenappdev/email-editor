@@ -448,7 +448,13 @@ export function ColorAccordion({ props, setProp, types }) {
                 <Box display="flex" alignItems="center">
                     {types.map((item, index) => {
                         var ct = getColorType(props, item);
-                        return <CustomColorButton key={index} value={ct.value} title={ct.name} />;
+                        return (
+                            <CustomColorButton
+                                key={index}
+                                value={ct.value === undefined ? "" : ct.value}
+                                title={ct.name}
+                            />
+                        );
                     })}
                 </Box>
             }
