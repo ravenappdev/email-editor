@@ -24,12 +24,26 @@ export const ButtonExport = ({ props, id, parentStyle, style, ...rest }) => {
         target="_blank"
         size={style.size}
         variant={style.variant}
-        style={Object.assign(
-          {
-            display: "inline-block",
-          },
-          style
-        )}
+        style={{
+          ...style,
+          display: "inline-block",
+          borderTop:
+            style.borderTop != null && style.borderTop[0] === "0"
+              ? null
+              : style.borderTop,
+          borderBottom:
+            style.borderBottom != null && style.borderBottom[0] === "0"
+              ? null
+              : style.borderBottom,
+          borderLeft:
+            style.borderLeft != null && style.borderLeft[0] === "0"
+              ? null
+              : style.borderLeft,
+          borderRight:
+            style.borderRight != null && style.borderRight[0] === "0"
+              ? null
+              : style.borderRight,
+        }}
       >
         {props.text}
       </MaterialButton>

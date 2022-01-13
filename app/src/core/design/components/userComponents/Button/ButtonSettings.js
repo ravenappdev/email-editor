@@ -16,7 +16,7 @@ import {
 import { CustomAccordion } from "../UtilComponents/Accordion";
 import { GroupedButtons } from "../UtilComponents/GroupedButtons";
 import { PADDING, MARGIN, BORDER } from "../Defaults";
-import { ButtonSizeAccordion, ButtonVariantAccordion } from "../UtilComponents/Button";
+import { ButtonSizeAccordion, ButtonVariantAccordion } from "../UtilComponents/ButtonProperties";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"

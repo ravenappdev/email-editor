@@ -102,14 +102,7 @@ export function BorderAccordion({ props, setProp, styleProp }) {
                     </Box>
                 )
             }
-            children={
-                <BorderComponent
-                    props={props}
-                    setProp={setProp}
-                    styleProp={styleProp}
-                    type={props.style.variant}
-                />
-            }
+            children={<BorderComponent props={props} setProp={setProp} styleProp={styleProp} />}
         />
     );
 }
