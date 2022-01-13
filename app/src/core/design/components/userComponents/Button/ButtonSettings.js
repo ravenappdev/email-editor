@@ -11,13 +11,12 @@ import {
     AlignmentAccordion,
     ActionAccordion,
     AccordionHeader,
-    BackgroundAccordion,
-    ButtonSizeAccordion,
-    ButtonVariantAccordion
+    BackgroundAccordion
 } from "../UtilComponents/SettingsUtils";
 import { CustomAccordion } from "../UtilComponents/Accordion";
 import { GroupedButtons } from "../UtilComponents/GroupedButtons";
 import { PADDING, MARGIN, BORDER } from "../Defaults";
+import { ButtonSizeAccordion, ButtonVariantAccordion } from "../UtilComponents/Button";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
@@ -99,14 +98,15 @@ export const ButtonDefaultProps = {
         // width: "auto",
         // height: "auto",
         // fontSize: "1em",
+        // backgroundColor: "",
         size: "medium",
         variant: "text",
-        color: "black",
-        backgroundColor: "",
+        color: "#000000",
         fontFamily:
             "-apple-system,BlinkMacSystemFont,‘Segoe UI’,Roboto,Helvetica,Arial,sans-serif,‘Apple Color Emoji’,‘Segoe UI Emoji’,‘Segoe UI Symbol’",
 
-        ...BORDER
+        ...BORDER,
+        borderRadius: 4
     },
     parentStyle: {
         align: "center",
