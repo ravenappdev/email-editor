@@ -19,9 +19,7 @@ function Border({ propKey, propName, setProp, props, styleProp }) {
     width = width && width !== "" ? width : "0px";
     style = style && style !== "" ? style : "solid";
     color = color && color !== "" ? color : "#000000";
-
     const selectedValue = borderStylesOpts.filter(opts => opts.toLowerCase() === style);
-
     const handleSetProp = () => {
         setProp(props => {
             if (propName === "All Sides") {
