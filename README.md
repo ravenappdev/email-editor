@@ -20,8 +20,10 @@ Checkout the demo app here - https://email-editor-demo-blue.vercel.app/
 
 ## Documentation
 
-- [Run Locally](https://prachi-choudhary.gitbook.io/email-editor-1/)
-- [Customization](https://prachi-choudhary.gitbook.io/email-editor-1/)
+- [Run Locally](https://editor-docs.ravenapp.dev/get-started/run-locally)
+- [Customization](https://editor-docs.ravenapp.dev/customization)
+
+Checkout the [documentation](https://editor-docs.ravenapp.dev/) for other available options.
 
 ## License
 

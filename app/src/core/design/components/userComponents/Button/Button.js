@@ -3,6 +3,20 @@ import React from "react";
 import { ButtonDefaultProps, ButtonSettings } from "./ButtonSettings";
 import { Button as MaterialButton, Grid, Link, Typography } from "@material-ui/core";
 
+//setting border to null if border-width is 0
+function getBorderStyles(style) {
+    var borderStyles = {
+        borderTop: style.borderTop != null && style.borderTop[0] === "0" ? null : style.borderTop,
+        borderBottom:
+            style.borderBottom != null && style.borderBottom[0] === "0" ? null : style.borderBottom,
+        borderLeft:
+            style.borderLeft != null && style.borderLeft[0] === "0" ? null : style.borderLeft,
+        borderRight:
+            style.borderRight != null && style.borderRight[0] === "0" ? null : style.borderRight
+    };
+    return borderStyles;
+}
+
 export const Button = ({ props, parentStyle, style, ...rest }) => {
     const {
         connectors: { connect, drag },
@@ -48,12 +62,13 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
             <MaterialButton
                 href={props.path}
                 target="_blank"
-                style={Object.assign(
-                    {
-                        display: "inline-block"
-                    },
-                    style
-                )}
+                size={style.size}
+                variant={style.variant}
+                style={{
+                    ...style,
+                    ...getBorderStyles(style),
+                    display: "inline-block"
+                }}
             >
                 {props.text}
             </MaterialButton>

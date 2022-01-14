@@ -33,10 +33,10 @@ export default function Design({ editorState, onHtmlOpen }) {
         : ContainerDefaultProps.style.backgroundColor;
     var styleCopy = JSON.parse(JSON.stringify(ContainerDefaultProps));
     styleCopy.style.backgroundColor = "#ffffff";
-    styleCopy.parentStyle.paddingTop = 30;
-    styleCopy.parentStyle.paddingBottom = 30;
-    styleCopy.parentStyle.paddingRight = 30;
-    styleCopy.parentStyle.paddingLeft = 30;
+    styleCopy.parentStyle.paddingTop = 10;
+    styleCopy.parentStyle.paddingBottom = 10;
+    styleCopy.parentStyle.paddingRight = 10;
+    styleCopy.parentStyle.paddingLeft = 10;
 
     useEffect(() => {
         if (editorState) {
