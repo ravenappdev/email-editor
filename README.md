@@ -23,7 +23,7 @@ Checkout the demo app here - https://email-editor-demo-blue.vercel.app/
 - [Run Locally](https://editor-docs.ravenapp.dev/get-started/run-locally)
 - [Customization](https://editor-docs.ravenapp.dev/customization)
 
-Checkout the [documentation](https://sriyansh.gitbook.io/email-editor/) for other available options.
+Checkout the [documentation](https://editor-docs.ravenapp.dev/) for other available options.
 
 ## License
 
