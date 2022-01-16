@@ -42,6 +42,7 @@ export function ButtonSizeAccordion({ props, setProp }) {
                             id="demo-simple-select"
                             value={props.style.size}
                             label="Size"
+                            margin="dense"
                             input={<OutlinedInput />}
                             style={myStyle.select}
                         >
@@ -99,6 +100,7 @@ export function ButtonVariantAccordion({ props, setProp }) {
                             id="demo-simple-select"
                             value={props.style.variant == "text" ? "default" : props.style.variant}
                             label="Type"
+                            margin="dense"
                             input={<OutlinedInput />}
                             style={myStyle.select}
                         >
