@@ -9,7 +9,6 @@ import {
     BorderAccordion,
     ColorAccordion,
     AlignmentAccordion,
-    SizeAccordion,
     ActionAccordion,
     AccordionHeader,
     BackgroundAccordion
@@ -17,6 +16,7 @@ import {
 import { CustomAccordion } from "../UtilComponents/Accordion";
 import { GroupedButtons } from "../UtilComponents/GroupedButtons";
 import { PADDING, MARGIN, BORDER } from "../Defaults";
+import { ButtonSizeAccordion, ButtonVariantAccordion } from "../UtilComponents/ButtonProperties";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
@@ -66,29 +66,11 @@ export const ButtonSettings = () => {
                                 margin="dense"
                             />
                         </Box>
-                        <Box m={1} mt={2}>
-                            <Typography
-                                variant="subtitle2"
-                                color="textSecondary"
-                                style={{ marginBottom: 8 }}
-                            >
-                                Font Size
-                            </Typography>
-                            <GroupedButtons
-                                displayProp={fontSize}
-                                handleChange={newValue => {
-                                    setProp(props => {
-                                        props.style.fontSize = newValue;
-                                    });
-                                }}
-                            />
-                        </Box>
                     </>
                 }
             />
-            <AccordionHeader title={"Size"} />
-            <SizeAccordion props={props} setProp={setProp} type={"Width"} />
-            <SizeAccordion props={props} setProp={setProp} type={"Height"} />
+            <ButtonSizeAccordion props={props} setProp={setProp} />
+            <ButtonVariantAccordion props={props} setProp={setProp} />
             <AccordionHeader title={"Spacing"} />
             <AlignmentAccordion props={props} setProp={setProp} />
             <MarginAccordion props={props} setProp={setProp} />
@@ -113,15 +95,18 @@ export const ButtonDefaultProps = {
         linkTarget: "_self"
     },
     style: {
-        width: "auto",
-        height: "auto",
-        color: "#ffffff",
-        backgroundColor: "#757de8",
-        fontSize: 16,
+        // width: "auto",
+        // height: "auto",
+        // fontSize: "1em",
+        // backgroundColor: "",
+        size: "medium",
+        variant: "text",
+        color: "#000000",
         fontFamily:
             "-apple-system,BlinkMacSystemFont,‘Segoe UI’,Roboto,Helvetica,Arial,sans-serif,‘Apple Color Emoji’,‘Segoe UI Emoji’,‘Segoe UI Symbol’",
 
-        ...BORDER
+        ...BORDER,
+        borderRadius: 4
     },
     parentStyle: {
         align: "center",
