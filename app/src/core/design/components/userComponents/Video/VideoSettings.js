@@ -7,10 +7,10 @@ import {
     BackgroundAccordion,
     BorderAccordion,
     MarginAccordion,
-    MediaAccordion,
     PaddingAccordion,
     SizeAccordion
 } from "../UtilComponents/SettingsUtils";
+import { MediaAccordion } from "../UtilComponents/VideoProperties";
 import { BORDER, MARGIN, PADDING } from "../Defaults";
 const useStyles = makeStyles(theme => ({
     root: {
@@ -38,6 +38,7 @@ export const VideoSettings = () => {
                 props={props}
                 setProp={setProp}
                 src={VideoDefaultProps.src}
+                thumbnailSrc={VideoDefaultProps.thumbnailSrc}
                 type={"video"}
             />
             <AccordionHeader title={"Size"} />
@@ -63,7 +64,11 @@ export const VideoDefaultProps = {
         linkPath: "#",
         linkTarget: "_blank",
         src: "",
-        altText: "Not found"
+        tempSrc: "",
+        altText: "Not found",
+        thumbnailSrc: "",
+        tempThumbnailSrc: "",
+        publicId: ""
     },
     style: {
         width: "100%",

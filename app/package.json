@@ -21,6 +21,7 @@
         "braft-editor": "^2.3.9",
         "braft-extensions": "^0.1.1",
         "classnames": "^2.3.1",
+        "cloudinary-react": "^1.7.0",
         "concurrently": "^6.2.0",
         "cors": "^2.8.5",
         "cssjson": "^2.1.3",
