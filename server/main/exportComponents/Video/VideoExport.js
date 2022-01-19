@@ -33,22 +33,19 @@ export const VideoExport = ({ props, style, parentStyle, ...rest }) => {
               {props.publicId != "" && (
                 <CloudinaryContext cloudName="ravenapp">
                   <Image publicId={props.publicId} style={Object.assign(style)}>
-                    {" "}
-                    <Transformation opacity="50" />
                     <Transformation
                       overlay={{
-                        url: "https://www.iconpacks.net/icons/1/free-video-icon-818-thumb.png",
+                        url: `https://res.cloudinary.com/ravenapp/image/upload/c_scale,h_${props.height},w_${props.width}/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png`,
                       }}
-                      height="100"
-                      width="100"
                     />
+
                     <Transformation flags="layer_apply" />
                   </Image>
                 </CloudinaryContext>
               )}
               {props.publicId === "" && (
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUKUCxK0r7OFkqtZcpxSGCo_y1R5T6HTL2JA&usqp=CAU"
+                  src="https://res.cloudinary.com/ravenapp/image/upload/c_scale,w_600/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png"
                   style={style}
                 ></img>
               )}
@@ -58,7 +55,7 @@ export const VideoExport = ({ props, style, parentStyle, ...rest }) => {
       ) : (
         <img
           style={style}
-          src={`https://raven-images.s3.ap-south-1.amazonaws.com/images/placeholder_video.jpg`}
+          src={`https://res.cloudinary.com/ravenapp/image/upload/c_scale,w_600/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png`}
         />
       )}
       {/* <VideoThumbnail

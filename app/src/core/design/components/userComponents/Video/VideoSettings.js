@@ -68,7 +68,9 @@ export const VideoDefaultProps = {
         altText: "Not found",
         thumbnailSrc: "",
         tempThumbnailSrc: "",
-        publicId: ""
+        publicId: "",
+        width: 0,
+        height: 0
     },
     style: {
         width: "100%",

@@ -1,32 +1,52 @@
-import { TextField, Box, Button } from "@material-ui/core";
+import { TextField, Box, Button, InputAdornment } from "@material-ui/core";
 import React from "react";
 import Typography from "@material-ui/core/Typography";
 import { CustomAccordion } from "./Accordion";
 import { IconButton } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";
-import axios from "axios";
+import exportImageUrl from "../../../../api/exportImageUrl";
+import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
+import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
+
+const DEFAULT_THUMBNAIL =
+    "https://res.cloudinary.com/ravenapp/image/upload/c_scale,w_600/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png";
 
 export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
-    const defaultThumbnail =
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUKUCxK0r7OFkqtZcpxSGCo_y1R5T6HTL2JA&usqp=CAU";
+    let thumbnailSrcValue = "",
+        tempThumbnailSrcValue = "",
+        publicId = "",
+        width = 360,
+        height = 600;
 
-    function getVideoId(url, v_id) {
+    function getYoutubeVideoId(url, v_id) {
         let flag = false;
 
-        if (url.substr(0, 31) != "https://www.youtube.com/watch?v") {
+        var re = /^(https?\:\/\/)?(www\.youtube\.com|youtu\.be)\/.+$/;
+        if (!re.exec(url)) {
             return false;
         }
-
-        for (let i = 0; i < url.length; i++) {
-            if (url[i] == "=") {
+        for (let i = 1; i < url.length; i++) {
+            if (url[i - 1] == "v" && url[i] == "=") {
                 flag = true;
-                v_id.src = "https://img.youtube.com/vi/" + url.substr(i + 1) + "/hqdefault.jpg";
+                v_id.src = `https://img.youtube.com/vi/${url.substr(i + 1)}/hqdefault.jpg`;
                 v_id.last = url.substr(i + 1);
             }
         }
         return flag;
     }
+
+    const handleClickReset = value => {
+        setProp(props => {
+            props.props.tempSrc = value;
+        });
+    };
+
+    const handleClickResetThumbnail = value => {
+        setProp(props => {
+            props.props.tempThumbnailSrc = value;
+        });
+    };
 
     const handleClick = async value => {
         setProp(props => {
@@ -36,65 +56,64 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
         var v_id = { src: "", last: "" };
         if (
             value != undefined &&
-            getVideoId(value, v_id) &&
+            getYoutubeVideoId(value, v_id) &&
             v_id.src != "" &&
             v_id.last.length === 11
         ) {
             const formData = new FormData();
             formData.append("file", v_id.src);
-            formData.append("upload_preset", "kuspnbei");
-            let public_id;
-            try {
-                const resp = await axios.post(
-                    "https://api.cloudinary.com/v1_1/ravenapp/image/upload",
-                    formData
-                );
 
-                public_id = resp.data.public_id;
-            } catch (err) {
-                console.error(err);
-            }
-            setProp(props => {
-                props.props.thumbnailSrc = v_id.src;
-                props.props.tempThumbnailSrc = v_id.src;
-                props.props.publicId = public_id;
-            });
+            const response = await exportImageUrl.generateUrl(formData);
+
+            thumbnailSrcValue = v_id.src;
+            tempThumbnailSrcValue = v_id.src;
+            publicId = response.public_id;
+            width = response.width;
+            height = response.height;
         } else {
-            setProp(props => {
-                props.props.thumbnailSrc = value === undefined ? "" : defaultThumbnail;
-                props.props.tempThumbnailSrc = value === undefined ? "" : defaultThumbnail;
-                props.props.publicId = "";
-            });
+            thumbnailSrcValue = value == undefined ? "" : DEFAULT_THUMBNAIL;
+            tempThumbnailSrcValue = value == undefined ? "" : DEFAULT_THUMBNAIL;
+            publicId = "";
         }
+
+        setProp(props => {
+            props.props.thumbnailSrc = thumbnailSrcValue;
+            props.props.tempThumbnailSrc = tempThumbnailSrcValue;
+            props.props.publicId = publicId;
+            props.props.width = width;
+            props.props.height = height;
+        });
     };
 
     const handleClickThumbnail = async value => {
         const formData = new FormData();
         if (value != undefined) {
             formData.append("file", value);
-            formData.append("upload_preset", "kuspnbei");
-            let public_id;
-            try {
-                const resp = await axios.post(
-                    "https://api.cloudinary.com/v1_1/ravenapp/image/upload",
-                    formData
-                );
 
-                public_id = resp.data.public_id;
+            try {
+                const response = await exportImageUrl.generateUrl(formData);
+                width = response.width;
+                height = response.height;
+                thumbnailSrcValue = value;
+                tempThumbnailSrcValue = value;
+                publicId = response.public_id;
             } catch (err) {
-                console.error(err);
+                publicId = "";
+                tempThumbnailSrcValue = DEFAULT_THUMBNAIL;
+                thumbnailSrcValue = DEFAULT_THUMBNAIL;
             }
-            setProp(props => {
-                props.props.thumbnailSrc = value;
-                props.props.publicId = public_id;
-            });
         } else {
-            setProp(props => {
-                props.props.thumbnailSrc = defaultThumbnail;
-                props.props.publicId = "";
-                props.props.tempThumbnailSrc = defaultThumbnail;
-            });
+            thumbnailSrcValue = DEFAULT_THUMBNAIL;
+            publicId = "";
+            tempThumbnailSrcValue = DEFAULT_THUMBNAIL;
         }
+        setProp(props => {
+            props.props.tempThumbnailSrc = tempThumbnailSrcValue;
+            props.props.thumbnailSrc = thumbnailSrcValue;
+            props.props.publicId = publicId;
+            props.props.width = width;
+            props.props.height = height;
+        });
     };
 
     return (
@@ -126,9 +145,16 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
                             fullWidth
                             margin="dense"
                         />
-                        {props.props.tempSrc != props.props.src && (
-                            <Button onClick={() => handleClick(props.props.tempSrc)}>Done</Button>
-                        )}
+                        <ReplayOutlinedIcon
+                            onClick={() => handleClickReset(props.props.src)}
+                            style={{ cursor: "pointer", float: "right" }}
+                            color="disabled"
+                        />
+                        <CheckCircleOutlineOutlinedIcon
+                            onClick={() => handleClick(props.props.tempSrc)}
+                            style={{ cursor: "pointer", float: "right", marginRight: "5px" }}
+                            color="disabled"
+                        />
                     </Box>
                     <Box m={1} mt={2}>
                         <Typography variant="subtitle2" color="textSecondary">
@@ -170,15 +196,16 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
                                 fullWidth
                                 margin="dense"
                             />
-                            {props.props.tempThumbnailSrc != props.props.thumbnailSrc && (
-                                <Button
-                                    onClick={() =>
-                                        handleClickThumbnail(props.props.tempThumbnailSrc)
-                                    }
-                                >
-                                    Done
-                                </Button>
-                            )}
+                            <ReplayOutlinedIcon
+                                onClick={() => handleClickResetThumbnail(props.props.thumbnailSrc)}
+                                style={{ cursor: "pointer", float: "right" }}
+                                color="disabled"
+                            />
+                            <CheckCircleOutlineOutlinedIcon
+                                onClick={() => handleClickThumbnail(props.props.tempThumbnailSrc)}
+                                style={{ cursor: "pointer", float: "right", marginRight: "5px" }}
+                                color="disabled"
+                            />
                         </Box>
                     )}
                 </>
