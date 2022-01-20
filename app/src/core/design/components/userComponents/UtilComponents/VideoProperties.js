@@ -9,15 +9,21 @@ import exportImageUrl from "../../../../api/exportImageUrl";
 import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
 import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
 
-const DEFAULT_THUMBNAIL =
-    "https://res.cloudinary.com/ravenapp/image/upload/c_scale,w_600/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png";
-
-export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
+export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaultThumbnail }) {
+    if (!String.prototype.format) {
+        String.prototype.format = function() {
+            var args = arguments;
+            return this.replace(/{(\d+)}/g, function(match, number) {
+                return typeof args[number] != "undefined" ? args[number] : match;
+            });
+        };
+    }
     let thumbnailSrcValue = "",
         tempThumbnailSrcValue = "",
         publicId = "",
         width = 360,
-        height = 600;
+        height = 600,
+        defaultThumbnailUrl = defaultThumbnail.format(360, 600);
 
     function getYoutubeVideoId(url, v_id) {
         let flag = false;
@@ -71,8 +77,8 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
             width = response.width;
             height = response.height;
         } else {
-            thumbnailSrcValue = value == undefined ? "" : DEFAULT_THUMBNAIL;
-            tempThumbnailSrcValue = value == undefined ? "" : DEFAULT_THUMBNAIL;
+            thumbnailSrcValue = value == undefined ? "" : defaultThumbnailUrl;
+            tempThumbnailSrcValue = value == undefined ? "" : defaultThumbnailUrl;
             publicId = "";
         }
 
@@ -99,13 +105,13 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
                 publicId = response.public_id;
             } catch (err) {
                 publicId = "";
-                tempThumbnailSrcValue = DEFAULT_THUMBNAIL;
-                thumbnailSrcValue = DEFAULT_THUMBNAIL;
+                tempThumbnailSrcValue = defaultThumbnailUrl;
+                thumbnailSrcValue = defaultThumbnailUrl;
             }
         } else {
-            thumbnailSrcValue = DEFAULT_THUMBNAIL;
+            thumbnailSrcValue = defaultThumbnailUrl;
             publicId = "";
-            tempThumbnailSrcValue = DEFAULT_THUMBNAIL;
+            tempThumbnailSrcValue = defaultThumbnailUrl;
         }
         setProp(props => {
             props.props.tempThumbnailSrc = tempThumbnailSrcValue;
@@ -203,7 +209,11 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type }) {
                             />
                             <CheckCircleOutlineOutlinedIcon
                                 onClick={() => handleClickThumbnail(props.props.tempThumbnailSrc)}
-                                style={{ cursor: "pointer", float: "right", marginRight: "5px" }}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    marginRight: "5px"
+                                }}
                                 color="disabled"
                             />
                         </Box>

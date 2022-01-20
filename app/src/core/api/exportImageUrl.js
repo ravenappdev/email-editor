@@ -1,7 +1,7 @@
 import axios from "./axios";
 class ExportImageUrl {
     generateUrl = formData => {
-        formData.append("upload_preset", "kuspnbei");
+        formData.append("upload_preset", "email_editor_preset");
         return new Promise((resolve, reject) => {
             axios
                 .post("https://api.cloudinary.com/v1_1/ravenapp/image/upload/", formData)

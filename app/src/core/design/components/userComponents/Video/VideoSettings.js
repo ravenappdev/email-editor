@@ -40,6 +40,7 @@ export const VideoSettings = () => {
                 src={VideoDefaultProps.src}
                 thumbnailSrc={VideoDefaultProps.thumbnailSrc}
                 type={"video"}
+                defaultThumbnail={VideoDefaultProps.defaultThumbnail}
             />
             <AccordionHeader title={"Size"} />
             <SizeAccordion props={props} setProp={setProp} type={"Width"} />
@@ -72,6 +73,8 @@ export const VideoDefaultProps = {
         width: 0,
         height: 0
     },
+    defaultThumbnail:
+        "https://res.cloudinary.com/ravenapp/image/upload/c_scale,h_{0},w_{1}/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png",
     style: {
         width: "100%",
         ...BORDER
