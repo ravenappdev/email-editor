@@ -43,9 +43,12 @@ export const VideoExport = ({
     >
       <a href={props.src} target="_blank" style={Object.assign(style)}>
         <div>
-          {props.publicId != "" && (
+          {props.thumbnailPublicId != "" && (
             <CloudinaryContext cloudName="ravenapp">
-              <Image publicId={props.publicId} style={Object.assign(style)}>
+              <Image
+                publicId={props.thumbnailPublicId}
+                style={Object.assign(style)}
+              >
                 <Transformation
                   overlay={{
                     url: defaultThumbnail.format(props.height, props.width),
@@ -56,7 +59,7 @@ export const VideoExport = ({
               </Image>
             </CloudinaryContext>
           )}
-          {props.publicId === "" && (
+          {props.thumbnailPublicId === "" && (
             <img src={defaultThumbnail.format(360, 600)} style={style}></img>
           )}
         </div>

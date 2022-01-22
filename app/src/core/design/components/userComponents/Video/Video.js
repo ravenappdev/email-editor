@@ -4,21 +4,13 @@ import React from "react";
 import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
 import { CloudinaryContext, Transformation } from "cloudinary-react";
 import { Image } from "cloudinary-react";
-
+import format from "../../../utils/stringFormat";
 export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
         id
     } = useNode();
 
-    if (!String.prototype.format) {
-        String.prototype.format = function() {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function(match, number) {
-                return typeof args[number] != "undefined" ? args[number] : match;
-            });
-        };
-    }
     //bgimage/bgcolor
     var parentStyleCopy = {
         ...parentStyle
@@ -42,12 +34,12 @@ export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) 
         >
             <a href={props.src} target="_blank" style={Object.assign(style)}>
                 <div>
-                    {props.publicId != "" && (
+                    {props.thumbnailPublicId != "" && (
                         <CloudinaryContext cloudName="ravenapp">
-                            <Image publicId={props.publicId} style={Object.assign(style)}>
+                            <Image publicId={props.thumbnailPublicId} style={Object.assign(style)}>
                                 <Transformation
                                     overlay={{
-                                        url: defaultThumbnail.format(props.height, props.width)
+                                        url: format(defaultThumbnail, props.height, props.width)
                                     }}
                                 />
 
@@ -55,8 +47,8 @@ export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) 
                             </Image>
                         </CloudinaryContext>
                     )}
-                    {props.publicId === "" && (
-                        <img src={defaultThumbnail.format(360, 600)} style={style}></img>
+                    {props.thumbnailPublicId === "" && (
+                        <img src={format(defaultThumbnail, 360, 600)} style={style}></img>
                     )}
                 </div>
             </a>

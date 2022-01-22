@@ -8,22 +8,24 @@ import YouTubeIcon from "@material-ui/icons/YouTube";
 import exportImageUrl from "../../../../api/exportImageUrl";
 import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
 import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
+import format from "../../../utils/stringFormat";
 
-export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaultThumbnail }) {
-    if (!String.prototype.format) {
-        String.prototype.format = function() {
-            var args = arguments;
-            return this.replace(/{(\d+)}/g, function(match, number) {
-                return typeof args[number] != "undefined" ? args[number] : match;
-            });
-        };
-    }
+export function MediaAccordion({
+    props,
+    setProp,
+    src,
+    thumbnailSrc,
+    defaultThumbnail,
+    defaultValues
+}) {
+    const [tempThumbnailSrc, setTempThumbnailSrc] = React.useState(props.props.thumbnailSrc);
+    const [tempSrc, setTempSrc] = React.useState(props.props.src);
+
     let thumbnailSrcValue = "",
-        tempThumbnailSrcValue = "",
         publicId = "",
-        width = 360,
-        height = 600,
-        defaultThumbnailUrl = defaultThumbnail.format(360, 600);
+        width = defaultValues.width,
+        height = defaultValues.height,
+        defaultThumbnailUrl = format(defaultThumbnail, defaultValues.height, defaultValues.width);
 
     function getYoutubeVideoId(url, v_id) {
         let flag = false;
@@ -42,19 +44,15 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaul
         return flag;
     }
 
-    const handleClickReset = value => {
-        setProp(props => {
-            props.props.tempSrc = value;
-        });
+    const handleResetMediaURL = value => {
+        setTempSrc(value);
     };
 
-    const handleClickResetThumbnail = value => {
-        setProp(props => {
-            props.props.tempThumbnailSrc = value;
-        });
+    const handleResetThumbnailURL = value => {
+        setTempThumbnailSrc(value);
     };
 
-    const handleClick = async value => {
+    const handleDoneMedialURL = async value => {
         setProp(props => {
             props.props.src = value;
         });
@@ -72,26 +70,23 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaul
             const response = await exportImageUrl.generateUrl(formData);
 
             thumbnailSrcValue = v_id.src;
-            tempThumbnailSrcValue = v_id.src;
             publicId = response.public_id;
             width = response.width;
             height = response.height;
         } else {
             thumbnailSrcValue = value == undefined ? "" : defaultThumbnailUrl;
-            tempThumbnailSrcValue = value == undefined ? "" : defaultThumbnailUrl;
             publicId = "";
         }
-
+        setTempThumbnailSrc(thumbnailSrcValue);
         setProp(props => {
             props.props.thumbnailSrc = thumbnailSrcValue;
-            props.props.tempThumbnailSrc = tempThumbnailSrcValue;
-            props.props.publicId = publicId;
+            props.props.thumbnailPublicId = publicId;
             props.props.width = width;
             props.props.height = height;
         });
     };
 
-    const handleClickThumbnail = async value => {
+    const handleDoneThumbnailURL = async value => {
         const formData = new FormData();
         if (value != undefined) {
             formData.append("file", value);
@@ -101,22 +96,19 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaul
                 width = response.width;
                 height = response.height;
                 thumbnailSrcValue = value;
-                tempThumbnailSrcValue = value;
                 publicId = response.public_id;
             } catch (err) {
                 publicId = "";
-                tempThumbnailSrcValue = defaultThumbnailUrl;
                 thumbnailSrcValue = defaultThumbnailUrl;
             }
         } else {
             thumbnailSrcValue = defaultThumbnailUrl;
             publicId = "";
-            tempThumbnailSrcValue = defaultThumbnailUrl;
         }
+        setTempThumbnailSrc(thumbnailSrcValue);
         setProp(props => {
-            props.props.tempThumbnailSrc = tempThumbnailSrcValue;
             props.props.thumbnailSrc = thumbnailSrcValue;
-            props.props.publicId = publicId;
+            props.props.thumbnailPublicId = publicId;
             props.props.width = width;
             props.props.height = height;
         });
@@ -140,25 +132,23 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaul
                         </Typography>
                         <TextField
                             variant="outlined"
-                            value={props.props.tempSrc === src ? "" : props.props.tempSrc}
+                            value={tempSrc === src ? "" : tempSrc}
                             onChange={e => {
                                 e.persist();
-                                setProp(props => {
-                                    if (e.target.value !== "") props.props.tempSrc = e.target.value;
-                                    else props.props.tempSrc = src;
-                                });
+                                if (e.target.value !== "") setTempSrc(e.target.value);
+                                else setTempSrc(src);
                             }}
                             fullWidth
                             margin="dense"
                         />
                         <ReplayOutlinedIcon
-                            onClick={() => handleClickReset(props.props.src)}
+                            onClick={() => handleResetMediaURL(props.props.src)}
                             style={{ cursor: "pointer", float: "right" }}
                             color="disabled"
                         />
                         <CheckCircleOutlineOutlinedIcon
-                            onClick={() => handleClick(props.props.tempSrc)}
-                            style={{ cursor: "pointer", float: "right", marginRight: "5px" }}
+                            onClick={() => handleDoneMedialURL(tempSrc)}
+                            style={{ cursor: "pointer", float: "right", marginRight: 5 }}
                             color="disabled"
                         />
                     </Box>
@@ -179,45 +169,36 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, type, defaul
                             margin="dense"
                         />
                     </Box>
-                    {type == "video" && (
-                        <Box m={1} mt={2}>
-                            <Typography variant="subtitle2" color="textSecondary">
-                                Thumbnail URL
-                            </Typography>
-                            <TextField
-                                variant="outlined"
-                                value={
-                                    props.props.tempThumbnailSrc === thumbnailSrc
-                                        ? ""
-                                        : props.props.tempThumbnailSrc
-                                }
-                                onChange={e => {
-                                    e.persist();
-                                    setProp(props => {
-                                        if (e.target.value !== "")
-                                            props.props.tempThumbnailSrc = e.target.value;
-                                        else props.props.tempThumbnailSrc = thumbnailSrc;
-                                    });
-                                }}
-                                fullWidth
-                                margin="dense"
-                            />
-                            <ReplayOutlinedIcon
-                                onClick={() => handleClickResetThumbnail(props.props.thumbnailSrc)}
-                                style={{ cursor: "pointer", float: "right" }}
-                                color="disabled"
-                            />
-                            <CheckCircleOutlineOutlinedIcon
-                                onClick={() => handleClickThumbnail(props.props.tempThumbnailSrc)}
-                                style={{
-                                    cursor: "pointer",
-                                    float: "right",
-                                    marginRight: "5px"
-                                }}
-                                color="disabled"
-                            />
-                        </Box>
-                    )}
+                    <Box m={1} mt={2}>
+                        <Typography variant="subtitle2" color="textSecondary">
+                            Thumbnail URL
+                        </Typography>
+                        <TextField
+                            variant="outlined"
+                            value={tempThumbnailSrc === thumbnailSrc ? "" : tempThumbnailSrc}
+                            onChange={e => {
+                                e.persist();
+                                if (e.target.value !== "") setTempThumbnailSrc(e.target.value);
+                                else setTempThumbnailSrc(thumbnailSrc);
+                            }}
+                            fullWidth
+                            margin="dense"
+                        />
+                        <ReplayOutlinedIcon
+                            onClick={() => handleResetThumbnailURL(props.props.thumbnailSrc)}
+                            style={{ cursor: "pointer", float: "right" }}
+                            color="disabled"
+                        />
+                        <CheckCircleOutlineOutlinedIcon
+                            onClick={() => handleDoneThumbnailURL(tempThumbnailSrc)}
+                            style={{
+                                cursor: "pointer",
+                                float: "right",
+                                marginRight: 5
+                            }}
+                            color="disabled"
+                        />
+                    </Box>
                 </>
             }
         />

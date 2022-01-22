@@ -12,6 +12,12 @@ import {
 } from "../UtilComponents/SettingsUtils";
 import { MediaAccordion } from "../UtilComponents/VideoProperties";
 import { BORDER, MARGIN, PADDING } from "../Defaults";
+
+export const DEFAULT_VALUES = {
+    height: 360,
+    width: 600
+};
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
@@ -39,8 +45,8 @@ export const VideoSettings = () => {
                 setProp={setProp}
                 src={VideoDefaultProps.src}
                 thumbnailSrc={VideoDefaultProps.thumbnailSrc}
-                type={"video"}
                 defaultThumbnail={VideoDefaultProps.defaultThumbnail}
+                defaultValues={DEFAULT_VALUES}
             />
             <AccordionHeader title={"Size"} />
             <SizeAccordion props={props} setProp={setProp} type={"Width"} />
@@ -65,11 +71,9 @@ export const VideoDefaultProps = {
         linkPath: "#",
         linkTarget: "_blank",
         src: "",
-        tempSrc: "",
         altText: "Not found",
         thumbnailSrc: "",
-        tempThumbnailSrc: "",
-        publicId: "",
+        thumbnailPublicId: "",
         width: 0,
         height: 0
     },
