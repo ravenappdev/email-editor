@@ -13,9 +13,11 @@ import {
 import { MediaAccordion } from "../UtilComponents/VideoProperties";
 import { BORDER, MARGIN, PADDING } from "../Defaults";
 
-export const DEFAULT_VALUES = {
+const DEFAULT_VALUES = {
     height: 360,
-    width: 600
+    width: 600,
+    thumbnail:
+        "https://res.cloudinary.com/ravenapp/image/upload/c_scale,h_{0},w_{1}/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png"
 };
 
 const useStyles = makeStyles(theme => ({
@@ -45,8 +47,7 @@ export const VideoSettings = () => {
                 setProp={setProp}
                 src={VideoDefaultProps.src}
                 thumbnailSrc={VideoDefaultProps.thumbnailSrc}
-                defaultThumbnail={VideoDefaultProps.defaultThumbnail}
-                defaultValues={DEFAULT_VALUES}
+                defaultValues={VideoDefaultProps.defaultValues}
             />
             <AccordionHeader title={"Size"} />
             <SizeAccordion props={props} setProp={setProp} type={"Width"} />
@@ -77,8 +78,10 @@ export const VideoDefaultProps = {
         width: 0,
         height: 0
     },
-    defaultThumbnail:
-        "https://res.cloudinary.com/ravenapp/image/upload/c_scale,h_{0},w_{1}/c_scale,l_pgs9syqbfhoomsixxirp_yo6xfx,w_100/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png",
+    defaultValues: {
+        ...DEFAULT_VALUES
+    },
+
     style: {
         width: "100%",
         ...BORDER

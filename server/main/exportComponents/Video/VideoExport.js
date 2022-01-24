@@ -9,7 +9,7 @@ import { Image } from "cloudinary-react";
 export const VideoExport = ({
   props,
   style,
-  defaultThumbnail,
+  defaultValues,
   parentStyle,
   ...rest
 }) => {
@@ -51,7 +51,10 @@ export const VideoExport = ({
               >
                 <Transformation
                   overlay={{
-                    url: defaultThumbnail.format(props.height, props.width),
+                    url: defaultValues.thumbnail.format(
+                      props.height,
+                      props.width
+                    ),
                   }}
                 />
 
@@ -60,7 +63,13 @@ export const VideoExport = ({
             </CloudinaryContext>
           )}
           {props.thumbnailPublicId === "" && (
-            <img src={defaultThumbnail.format(360, 600)} style={style}></img>
+            <img
+              src={defaultValues.thumbnail.format(
+                defaultValues.height,
+                defaultValues.width
+              )}
+              style={style}
+            ></img>
           )}
         </div>
       </a>

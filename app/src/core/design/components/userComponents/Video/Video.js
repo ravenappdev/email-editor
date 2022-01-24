@@ -5,7 +5,7 @@ import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
 import { CloudinaryContext, Transformation } from "cloudinary-react";
 import { Image } from "cloudinary-react";
 import format from "../../../utils/stringFormat";
-export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) => {
+export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
         id
@@ -39,7 +39,11 @@ export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) 
                             <Image publicId={props.thumbnailPublicId} style={Object.assign(style)}>
                                 <Transformation
                                     overlay={{
-                                        url: format(defaultThumbnail, props.height, props.width)
+                                        url: format(
+                                            defaultValues.thumbnail,
+                                            props.height,
+                                            props.width
+                                        )
                                     }}
                                 />
 
@@ -48,7 +52,14 @@ export const Video = ({ props, style, defaultThumbnail, parentStyle, ...rest }) 
                         </CloudinaryContext>
                     )}
                     {props.thumbnailPublicId === "" && (
-                        <img src={format(defaultThumbnail, 360, 600)} style={style}></img>
+                        <img
+                            src={format(
+                                defaultValues.thumbnail,
+                                defaultValues.height,
+                                defaultValues.width
+                            )}
+                            style={style}
+                        ></img>
                     )}
                 </div>
             </a>

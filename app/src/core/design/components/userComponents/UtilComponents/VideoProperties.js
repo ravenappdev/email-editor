@@ -10,14 +10,7 @@ import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlin
 import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
 import format from "../../../utils/stringFormat";
 
-export function MediaAccordion({
-    props,
-    setProp,
-    src,
-    thumbnailSrc,
-    defaultThumbnail,
-    defaultValues
-}) {
+export function MediaAccordion({ props, setProp, src, thumbnailSrc, defaultValues }) {
     const [tempThumbnailSrc, setTempThumbnailSrc] = React.useState(props.props.thumbnailSrc);
     const [tempSrc, setTempSrc] = React.useState(props.props.src);
 
@@ -25,7 +18,11 @@ export function MediaAccordion({
         publicId = "",
         width = defaultValues.width,
         height = defaultValues.height,
-        defaultThumbnailUrl = format(defaultThumbnail, defaultValues.height, defaultValues.width);
+        defaultThumbnailUrl = format(
+            defaultValues.thumbnail,
+            defaultValues.height,
+            defaultValues.width
+        );
 
     function getYoutubeVideoId(url, v_id) {
         let flag = false;
