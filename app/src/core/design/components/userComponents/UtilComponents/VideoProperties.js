@@ -138,18 +138,34 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, defaultValue
                             fullWidth
                             margin="dense"
                         />
-                        <ReplayOutlinedIcon
-                            onClick={() => handleResetMediaURL(props.props.src)}
-                            style={{ cursor: "pointer", float: "right" }}
-                            color="disabled"
-                        />
-                        <CheckCircleOutlineOutlinedIcon
-                            onClick={() => handleDoneMedialURL(tempSrc)}
-                            style={{ cursor: "pointer", float: "right", marginRight: 5 }}
-                            color="disabled"
-                        />
+                        <Tooltip arrow title={"Done"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleDoneMedialURL(tempSrc)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.src == tempSrc ? "#b4bec3" : "green"
+                                }}
+                            >
+                                <CheckCircleOutlineOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
+                        <Tooltip arrow title={"Reset"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleResetMediaURL(props.props.src)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.src == tempSrc ? "#b4bec3" : "black"
+                                }}
+                            >
+                                <ReplayOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Box>
-                    <Box m={1} mt={2}>
+                    <Box m={1} mt={3}>
                         <Typography variant="subtitle2" color="textSecondary">
                             Placeholder text
                         </Typography>
@@ -166,7 +182,7 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, defaultValue
                             margin="dense"
                         />
                     </Box>
-                    <Box m={1} mt={2}>
+                    <Box m={1} mt={3}>
                         <Typography variant="subtitle2" color="textSecondary">
                             Thumbnail URL
                         </Typography>
@@ -181,20 +197,40 @@ export function MediaAccordion({ props, setProp, src, thumbnailSrc, defaultValue
                             fullWidth
                             margin="dense"
                         />
-                        <ReplayOutlinedIcon
-                            onClick={() => handleResetThumbnailURL(props.props.thumbnailSrc)}
-                            style={{ cursor: "pointer", float: "right" }}
-                            color="disabled"
-                        />
-                        <CheckCircleOutlineOutlinedIcon
-                            onClick={() => handleDoneThumbnailURL(tempThumbnailSrc)}
-                            style={{
-                                cursor: "pointer",
-                                float: "right",
-                                marginRight: 5
-                            }}
-                            color="disabled"
-                        />
+                        <Tooltip arrow title={"Done"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleDoneThumbnailURL(tempThumbnailSrc)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    marginRight: 5,
+                                    color:
+                                        props.props.thumbnailSrc == tempThumbnailSrc
+                                            ? "#b4bec3"
+                                            : "green"
+                                }}
+                            >
+                                <CheckCircleOutlineOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip arrow title={"Reset"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleResetThumbnailURL(props.props.thumbnailSrc)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color:
+                                        props.props.thumbnailSrc == tempThumbnailSrc
+                                            ? "#b4bec3"
+                                            : "black"
+                                }}
+                            >
+                                <ReplayOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Box>
                 </>
             }

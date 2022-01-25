@@ -19,6 +19,14 @@ export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => 
         parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
     }
 
+    function isCtrlPressed(e) {
+        if (e.ctrlKey) {
+            if (props.path != "#") {
+                window.open(props.src, "_blank");
+            }
+        }
+    }
+
     return (
         <Grid
             item
@@ -32,7 +40,13 @@ export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => 
             )}
             ref={connect}
         >
-            <a href={props.src} target="_blank" style={Object.assign(style)}>
+            <a
+                onClick={e => {
+                    isCtrlPressed(e);
+                }}
+                target="_blank"
+                style={Object.assign(style)}
+            >
                 <div>
                     {props.thumbnailPublicId != "" && (
                         <CloudinaryContext cloudName="ravenapp">

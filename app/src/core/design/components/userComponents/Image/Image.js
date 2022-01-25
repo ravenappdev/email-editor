@@ -13,8 +13,15 @@ export const Image = ({ props, style, parentStyle, ...rest }) => {
     var parentStyleCopy = {
         ...parentStyle
     };
-
     parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
+
+    function isCtrlPressed(e) {
+        if (e.ctrlKey) {
+            if (props.path != "#") {
+                window.open(props.path, "_blank");
+            }
+        }
+    }
     return (
         <Grid
             item
@@ -29,10 +36,12 @@ export const Image = ({ props, style, parentStyle, ...rest }) => {
             )}
         >
             <a
-                href={props.path}
                 target={props.linkTarget}
                 style={{
                     pointerEvents: props.path === "#" ? "none" : "auto"
+                }}
+                onClick={e => {
+                    isCtrlPressed(e);
                 }}
             >
                 <img src={props.src} width={style.width} alt={props.altText} style={style} />

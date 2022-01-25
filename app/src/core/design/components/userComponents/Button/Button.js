@@ -28,6 +28,14 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
         parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
     }
 
+    function isCtrlPressed(e) {
+        if (e.ctrlKey) {
+            if (props.path != "#") {
+                window.open(props.path, "_blank");
+            }
+        }
+    }
+
     return (
         <Grid
             item
@@ -60,7 +68,6 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
                 {props.text}
             </a> */}
             <MaterialButton
-                href={props.path}
                 target="_blank"
                 size={style.size}
                 variant={style.variant}
@@ -68,6 +75,9 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
                     ...style,
                     ...getBorderStyles(style),
                     display: "inline-block"
+                }}
+                onClick={e => {
+                    isCtrlPressed(e);
                 }}
             >
                 {props.text}
