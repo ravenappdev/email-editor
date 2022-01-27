@@ -5,6 +5,7 @@ import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
 import { CloudinaryContext, Transformation } from "cloudinary-react";
 import { Image } from "cloudinary-react";
 import format from "../../../utils/stringFormat";
+import ifCtrlCmdPressed from "../../../utils/detectCtrlCmd";
 export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
@@ -17,14 +18,6 @@ export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => 
     };
     if (parentStyleCopy.backgroundImage !== "") {
         parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
-    }
-
-    function isCtrlPressed(e) {
-        if (e.ctrlKey) {
-            if (props.path != "#") {
-                window.open(props.src, "_blank");
-            }
-        }
     }
 
     return (
@@ -42,7 +35,7 @@ export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => 
         >
             <a
                 onClick={e => {
-                    isCtrlPressed(e);
+                    ifCtrlCmdPressed(e, props.src);
                 }}
                 target="_blank"
                 style={Object.assign(style)}

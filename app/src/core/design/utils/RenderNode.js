@@ -249,7 +249,7 @@ export const RenderNode = ({ render }) => {
                                   <>
                                       {(src.data.name === "Image" ||
                                           src.data.name === "Button") && (
-                                          <Tooltip arrow title={"Open URL (Ctrl + Click)"}>
+                                          <Tooltip arrow title={"Open URL (Ctrl / Cmd + Click)"}>
                                               <IconButton
                                                   className={classes.indicatorIcons}
                                                   size="small"
@@ -262,7 +262,7 @@ export const RenderNode = ({ render }) => {
                                           </Tooltip>
                                       )}
                                       {src.data.name === "Video" && (
-                                          <Tooltip arrow title={"Open URL (Ctrl + Click)"}>
+                                          <Tooltip arrow title={"Open URL (Ctrl / Cmd + Click)"}>
                                               <IconButton
                                                   className={classes.indicatorIcons}
                                                   size="small"

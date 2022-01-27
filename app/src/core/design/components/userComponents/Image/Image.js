@@ -2,7 +2,7 @@ import { useNode } from "@craftjs/core";
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { ImageDefaultProps, ImageSettings } from "./ImageSettings";
-
+import ifCtrlCmdPressed from "../../../utils/detectCtrlCmd";
 export const Image = ({ props, style, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
@@ -15,13 +15,6 @@ export const Image = ({ props, style, parentStyle, ...rest }) => {
     };
     parentStyleCopy.backgroundImage = "url(" + parentStyleCopy.backgroundImage + ")";
 
-    function isCtrlPressed(e) {
-        if (e.ctrlKey) {
-            if (props.path != "#") {
-                window.open(props.path, "_blank");
-            }
-        }
-    }
     return (
         <Grid
             item
@@ -41,7 +34,7 @@ export const Image = ({ props, style, parentStyle, ...rest }) => {
                     pointerEvents: props.path === "#" ? "none" : "auto"
                 }}
                 onClick={e => {
-                    isCtrlPressed(e);
+                    ifCtrlCmdPressed(e, props.path);
                 }}
             >
                 <img src={props.src} width={style.width} alt={props.altText} style={style} />
