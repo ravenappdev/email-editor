@@ -2,7 +2,10 @@ import { useNode } from "@craftjs/core";
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
-export const Video = ({ props, style, parentStyle, ...rest }) => {
+import { CloudinaryContext, Transformation } from "cloudinary-react";
+import { Image } from "cloudinary-react";
+import format from "../../../utils/stringFormat";
+export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
         id
@@ -29,31 +32,37 @@ export const Video = ({ props, style, parentStyle, ...rest }) => {
             )}
             ref={connect}
         >
-            {props.src ? (
-                <>
-                    {/* <PlayCircleOutlineOutlinedIcon
-                        htmlColor="#fafafa"
-                        fontSize="large"
-                        style={{ position: "absolute" }}
-                    /> */}
-                    <video style={style} controls>
-                        <source src={props.src} type="video/mp4" />
-                        Your browser does not support HTML video.
-                    </video>
-                </>
-            ) : (
-                <img
-                    style={style}
-                    src={`https://raven-images.s3.ap-south-1.amazonaws.com/images/placeholder_video.jpg`}
-                />
-            )}
-            {/* <VideoThumbnail
-                videoUrl={videoUrl}
-                thumbnailHandler={thumbnail => console.log(typeof thumbnail)}
-                width={356}
-                height={200}
-                style={style}
-            /> */}
+            <a href={props.src} target="_blank" style={Object.assign(style)}>
+                <div>
+                    {props.thumbnailPublicId != "" && (
+                        <CloudinaryContext cloudName="ravenapp">
+                            <Image publicId={props.thumbnailPublicId} style={Object.assign(style)}>
+                                <Transformation
+                                    overlay={{
+                                        url: format(
+                                            defaultValues.thumbnail,
+                                            props.height,
+                                            props.width
+                                        )
+                                    }}
+                                />
+
+                                <Transformation flags="layer_apply" />
+                            </Image>
+                        </CloudinaryContext>
+                    )}
+                    {props.thumbnailPublicId === "" && (
+                        <img
+                            src={format(
+                                defaultValues.thumbnail,
+                                defaultValues.height,
+                                defaultValues.width
+                            )}
+                            style={style}
+                        ></img>
+                    )}
+                </div>
+            </a>
         </Grid>
     );
 };
