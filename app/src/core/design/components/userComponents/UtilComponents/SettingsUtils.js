@@ -20,6 +20,8 @@ import { IconButton } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import LaunchIcon from "@material-ui/icons/Launch";
+import CheckCircleOutlineOutlinedIcon from "@material-ui/icons/CheckCircleOutlineOutlined";
+import ReplayOutlinedIcon from "@material-ui/icons/ReplayOutlined";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -191,6 +193,16 @@ export function SizeAccordion({ props, setProp, type }) {
 }
 
 export function ActionAccordion({ props, setProp }) {
+    const [tempPath, setTempPath] = React.useState(props.props.path);
+    const handleResetActionUrl = value => {
+        setTempPath(value);
+    };
+
+    const handleDoneActionUrl = value => {
+        setProp(props => {
+            props.props.path = value;
+        });
+    };
     return (
         <CustomAccordion
             title="Action"
@@ -209,19 +221,44 @@ export function ActionAccordion({ props, setProp }) {
                         </Typography>
                         <TextField
                             variant="outlined"
-                            value={props.props.path === "#" ? "" : props.props.path}
+                            value={tempPath === "#" ? "" : tempPath}
                             onChange={e => {
                                 e.persist();
-                                setProp(prop => {
-                                    if (e.target.value !== "") prop.props.path = e.target.value;
-                                    else prop.props.path = "#";
-                                });
+                                if (e.target.value !== "") setTempPath(e.target.value);
+                                else setTempPath("#");
                             }}
                             fullWidth
                             margin="dense"
                         />
+                        <Tooltip arrow title={"Done"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleDoneActionUrl(tempPath)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.path == tempPath ? "#b4bec3" : "green"
+                                }}
+                            >
+                                <CheckCircleOutlineOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip arrow title={"Reset"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleResetActionUrl(props.props.path)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.path == tempPath ? "#b4bec3" : "black"
+                                }}
+                            >
+                                <ReplayOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Box>
-                    <Box m={1} mt={2}>
+                    <Box m={1} mt={3}>
                         <Typography variant="subtitle2" color="textSecondary">
                             Open URL in
                         </Typography>
@@ -489,6 +526,16 @@ export function ColorAccordion({ props, setProp, types }) {
 }
 
 export function MediaAccordion({ props, setProp, src, type }) {
+    const [tempSrc, setTempSrc] = React.useState(props.props.src);
+    const handleResetMediaUrl = value => {
+        setTempSrc(value);
+    };
+
+    const handleDoneMediaUrl = value => {
+        setProp(props => {
+            props.props.src = value;
+        });
+    };
     return (
         <CustomAccordion
             title="Media"
@@ -511,19 +558,44 @@ export function MediaAccordion({ props, setProp, src, type }) {
                         </Typography>
                         <TextField
                             variant="outlined"
-                            value={props.props.src === src ? "" : props.props.src}
+                            value={tempSrc === src ? "" : tempSrc}
                             onChange={e => {
                                 e.persist();
-                                setProp(props => {
-                                    if (e.target.value !== "") props.props.src = e.target.value;
-                                    else props.props.src = src;
-                                });
+                                if (e.target.value !== "") setTempSrc(e.target.value);
+                                else setTempSrc(src);
                             }}
                             fullWidth
                             margin="dense"
                         />
+                        <Tooltip arrow title={"Done"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleDoneMediaUrl(tempSrc)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.src == tempSrc ? "#b4bec3" : "green"
+                                }}
+                            >
+                                <CheckCircleOutlineOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
+
+                        <Tooltip arrow title={"Reset"}>
+                            <IconButton
+                                size="small"
+                                onClick={() => handleResetMediaUrl(props.props.src)}
+                                style={{
+                                    cursor: "pointer",
+                                    float: "right",
+                                    color: props.props.src == tempSrc ? "#b4bec3" : "black"
+                                }}
+                            >
+                                <ReplayOutlinedIcon />
+                            </IconButton>
+                        </Tooltip>
                     </Box>
-                    <Box m={1} mt={2}>
+                    <Box m={1} mt={3}>
                         <Typography variant="subtitle2" color="textSecondary">
                             Placeholder text
                         </Typography>

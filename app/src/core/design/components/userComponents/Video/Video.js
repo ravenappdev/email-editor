@@ -5,6 +5,7 @@ import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
 import { CloudinaryContext, Transformation } from "cloudinary-react";
 import { Image } from "cloudinary-react";
 import format from "../../../utils/stringFormat";
+import ifCtrlCmdPressed from "../../../utils/detectCtrlCmd";
 export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
@@ -32,7 +33,13 @@ export const Video = ({ props, style, defaultValues, parentStyle, ...rest }) => 
             )}
             ref={connect}
         >
-            <a href={props.src} target="_blank" style={Object.assign(style)}>
+            <a
+                onClick={e => {
+                    ifCtrlCmdPressed(e, props.src);
+                }}
+                target="_blank"
+                style={Object.assign(style)}
+            >
                 <div>
                     {props.thumbnailPublicId != "" && (
                         <CloudinaryContext cloudName="ravenapp">

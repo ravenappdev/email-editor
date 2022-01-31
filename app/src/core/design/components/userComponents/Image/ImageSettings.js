@@ -14,6 +14,9 @@ import {
 } from "../UtilComponents/SettingsUtils";
 import { BORDER, MARGIN, PADDING } from "../Defaults";
 
+const DEFAULT_URL =
+    "https://res.cloudinary.com/ravenapp/image/upload/c_scale,l_photo-album-icon-png-14_qetrv8,w_150/o_50/v1642597408/cvshvvdzkhrlob4rkfdo_jc3xpx.png";
+
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
@@ -65,7 +68,7 @@ export const ImageDefaultProps = {
     props: {
         path: "#",
         linkTarget: "_self",
-        src: "https://raven-images.s3.ap-south-1.amazonaws.com/images/placeholder_image.jpg",
+        src: DEFAULT_URL,
         altText: "Not found"
     },
     style: {

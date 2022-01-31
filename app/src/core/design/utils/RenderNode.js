@@ -11,6 +11,7 @@ import ArrowDownwardIcon from "@material-ui/icons/ArrowDownward";
 import AddIcon from "@material-ui/icons/Add";
 import { Toolbox } from "./Toolbox";
 import ZoomOutMapIcon from "@material-ui/icons/ZoomOutMap";
+import LaunchIcon from "@material-ui/icons/Launch";
 import { renderNodeUtils } from "./renderNodeUtils";
 import FilterNoneIcon from "@material-ui/icons/FilterNone";
 
@@ -179,6 +180,11 @@ export const RenderNode = ({ render }) => {
     window.onkeyup = function(e) {
         keysDown[e.key] = false;
     };
+
+    function onClickOpenUrl(path) {
+        if (path != "#") window.open(path, "_blank");
+    }
+
     const border = ({ top, bottom, right, left, height, width, name }) => {
         const borderLabel = `border${titleCase(name)}`;
         return (
@@ -221,7 +227,12 @@ export const RenderNode = ({ render }) => {
                               <IndicatorDiv
                                   ref={currentRef}
                                   style={{
-                                      right: -155,
+                                      right:
+                                          src.data.name == "Image" ||
+                                          src.data.name == "Button" ||
+                                          src.data.name == "Video"
+                                              ? -184
+                                              : -155,
                                       top: 27,
                                       zIndex: 1000,
                                       color: "white",
@@ -236,6 +247,33 @@ export const RenderNode = ({ render }) => {
                                   }}
                               >
                                   <>
+                                      {(src.data.name === "Image" ||
+                                          src.data.name === "Button") && (
+                                          <Tooltip arrow title={"Open URL (Ctrl / Cmd + Click)"}>
+                                              <IconButton
+                                                  className={classes.indicatorIcons}
+                                                  size="small"
+                                                  onClick={() =>
+                                                      onClickOpenUrl(src.data.props.props.path)
+                                                  }
+                                              >
+                                                  <LaunchIcon />
+                                              </IconButton>
+                                          </Tooltip>
+                                      )}
+                                      {src.data.name === "Video" && (
+                                          <Tooltip arrow title={"Open URL (Ctrl / Cmd + Click)"}>
+                                              <IconButton
+                                                  className={classes.indicatorIcons}
+                                                  size="small"
+                                                  onClick={() =>
+                                                      onClickOpenUrl(src.data.props.props.src)
+                                                  }
+                                              >
+                                                  <LaunchIcon />
+                                              </IconButton>
+                                          </Tooltip>
+                                      )}
                                       {moveable && (
                                           <>
                                               <Tooltip arrow title={"Move Up (Shift + ↑)"} arrow>

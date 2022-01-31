@@ -2,7 +2,7 @@ import { useNode } from "@craftjs/core";
 import React from "react";
 import { ButtonDefaultProps, ButtonSettings } from "./ButtonSettings";
 import { Button as MaterialButton, Grid, Link, Typography } from "@material-ui/core";
-
+import ifCtrlCmdPressed from "../../../utils/detectCtrlCmd";
 //setting border to null if border-width is 0
 function getBorderStyles(style) {
     var borderStyles = {
@@ -60,7 +60,6 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
                 {props.text}
             </a> */}
             <MaterialButton
-                href={props.path}
                 target="_blank"
                 size={style.size}
                 variant={style.variant}
@@ -68,6 +67,9 @@ export const Button = ({ props, parentStyle, style, ...rest }) => {
                     ...style,
                     ...getBorderStyles(style),
                     display: "inline-block"
+                }}
+                onClick={e => {
+                    ifCtrlCmdPressed(e, props.path);
                 }}
             >
                 {props.text}
