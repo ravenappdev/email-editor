@@ -47,7 +47,9 @@ function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
 
         <style type="text/css">
             .mainClass{
-                width: 58.333333333333336%
+                width: 58.333333333333336%;
+                max-width: 600px;
+                min-width: 600px;
             }
         </style>
         <style type="text/css">
@@ -56,6 +58,8 @@ function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
                 /* For mobile phones: */
                 .mainClass {
                     width: 100%;
+                    max-width: 100%;
+                    min-width: 100%;
                 }
             }
             @media screen and (max-width: 600px) {
