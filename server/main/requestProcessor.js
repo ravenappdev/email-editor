@@ -47,7 +47,7 @@ function renderFullPage(html1, css1, bodyBgColor, bodyBgImage) {
 
         <style type="text/css">
             .mainClass{
-                width: 58.333333333333336%
+                width: 58.333333333333336%;
             }
         </style>
         <style type="text/css">

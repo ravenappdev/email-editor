@@ -35,7 +35,11 @@ export const Grid = forwardRef(
                         ///border: "2px solid black",
                         //   overflowWrap: "break-word"
                       }
-                    : {}),
+                    : {
+                        width: "100%",
+                        maxWidth: 738,
+                        minWidth: 320 - style.paddingLeft - style.paddingRight,
+                      }),
                 }}
                 className={id === "Main" ? "mainClass" : null}
               >

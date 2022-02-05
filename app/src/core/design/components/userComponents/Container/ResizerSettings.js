@@ -25,7 +25,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const ResizerSettings = ({ id, isParent }) => {
+export const ResizerSettings = ({ id, isParent, type }) => {
     // console.log(id);
     const {
         actions: { setProp },
@@ -49,11 +49,10 @@ export const ResizerSettings = ({ id, isParent }) => {
             val(props);
         });
     };
-
     return (
         <>
             {isParent && <AccordionHeader title={"Spacing"} />}
-            <MarginAccordion props={props} setProp={handleSetProp} />
+            {type > 1 && <MarginAccordion props={props} setProp={handleSetProp} />}
             <PaddingAccordion props={props} setProp={handleSetProp} />
             {isParent && <AccordionHeader title={"Decoration"} />}
             <BackgroundAccordion
