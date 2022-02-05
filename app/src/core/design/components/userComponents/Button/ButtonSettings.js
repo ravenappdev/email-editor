@@ -6,7 +6,6 @@ import Typography from "@material-ui/core/Typography";
 import {
     PaddingAccordion,
     MarginAccordion,
-    BorderAccordion,
     ColorAccordion,
     AlignmentAccordion,
     ActionAccordion,
@@ -16,7 +15,11 @@ import {
 import { CustomAccordion } from "../UtilComponents/Accordion";
 import { GroupedButtons } from "../UtilComponents/GroupedButtons";
 import { PADDING, MARGIN, BORDER } from "../Defaults";
-import { ButtonSizeAccordion, ButtonVariantAccordion } from "../UtilComponents/ButtonProperties";
+import {
+    ButtonSizeAccordion,
+    ButtonVariantAccordion,
+    BorderAccordion
+} from "../UtilComponents/ButtonProperties";
 const useStyles = makeStyles(theme => ({
     root: {
         width: "100%"
@@ -82,7 +85,7 @@ export const ButtonSettings = () => {
                 isSelfBg={false}
                 defaultImage={ButtonDefaultProps.parentStyle.backgroundImage}
             />
-            <BorderAccordion props={props} setProp={setProp} />
+            <BorderAccordion props={props} setProp={setProp} type={props.style.variant} />
             <ColorAccordion props={props} setProp={setProp} types={["Text", "Button"]} />
         </div>
     );
@@ -106,7 +109,15 @@ export const ButtonDefaultProps = {
             "-apple-system,BlinkMacSystemFont,‘Segoe UI’,Roboto,Helvetica,Arial,sans-serif,‘Apple Color Emoji’,‘Segoe UI Emoji’,‘Segoe UI Symbol’",
 
         ...BORDER,
-        borderRadius: 4
+        borderRadius: 4,
+        minWidth: "64px",
+        boxSizing: "border-box",
+        fontWeight: "500",
+        lineHeight: "1.75",
+        letterSpacing: "0.02857em",
+        textTransform: "uppercase",
+        textDecoration: "none",
+        cursor: "pointer"
     },
     parentStyle: {
         align: "center",

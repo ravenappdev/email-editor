@@ -2,27 +2,35 @@ import React from "react";
 import { Box, Button as MaterialButton, Link } from "@material-ui/core";
 import { Grid } from "../Grid";
 
-//setting border to null if border-width is 0
-function getBorderStyles(style) {
-  var borderStyles = {
-    borderTop:
-      style.borderTop != null && style.borderTop[0] === "0"
-        ? null
-        : style.borderTop,
-    borderBottom:
-      style.borderBottom != null && style.borderBottom[0] === "0"
-        ? null
-        : style.borderBottom,
-    borderLeft:
-      style.borderLeft != null && style.borderLeft[0] === "0"
-        ? null
-        : style.borderLeft,
-    borderRight:
-      style.borderRight != null && style.borderRight[0] === "0"
-        ? null
-        : style.borderRight,
+function getStyles(style) {
+  var styles = {
+    padding: "",
+    fontSize: "",
+    backgroundColor: "",
   };
-  return borderStyles;
+
+  if (style.size === "large") {
+    styles.padding = "8px 22px";
+    styles.fontSize = "0.9375rem";
+  } else if (style.size === "medium") {
+    styles.padding = "7px 16px";
+    styles.fontSize = "0.875rem";
+  } else {
+    styles.padding = "4px 10px";
+    styles.fontSize = "0.8125rem";
+  }
+
+  if (style.backgroundColor == undefined) {
+    if (style.variant === "contained") {
+      styles.backgroundColor = "#e0e0e0";
+    } else {
+      styles.backgroundColor = "#FFFFFF";
+    }
+  } else {
+    styles.backgroundColor = style.backgroundColor;
+  }
+
+  return styles;
 }
 export const ButtonExport = ({ props, id, parentStyle, style, ...rest }) => {
   //bgimage/bgcolor
@@ -42,19 +50,17 @@ export const ButtonExport = ({ props, id, parentStyle, style, ...rest }) => {
         parentStyleCopy
       )}
     >
-      <MaterialButton
+      <a
         href={props.path}
-        target="_blank"
-        size={style.size}
-        variant={style.variant}
+        target={"_blank"}
         style={{
           ...style,
-          ...getBorderStyles(style),
+          ...getStyles(style),
           display: "inline-block",
         }}
       >
         {props.text}
-      </MaterialButton>
+      </a>
     </Grid>
   );
 };

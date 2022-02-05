@@ -243,7 +243,7 @@ export const ContainerSettings = () => {
                     }
                 />
             )}
-            <ResizerSettings id={id} isParent={true} />
+            <ResizerSettings id={id} isParent={true} type={props.props.containerType} />
         </>
     );
 };
