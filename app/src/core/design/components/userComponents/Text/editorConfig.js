@@ -2,7 +2,7 @@ import React from "react";
 
 import "braft-editor/dist/index.css";
 import { ContentUtils } from "braft-utils";
-import { Box, Tooltip } from "@material-ui/core";
+import { Box, List, ListItem, ListItemText, Tooltip } from "@material-ui/core";
 import { GroupedButtons } from "../UtilComponents";
 import { Button } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
@@ -93,6 +93,25 @@ function FontSize({ editorState, setEditorState, editorInstance }) {
     );
 }
 
+function Placeholder({ editorState, setEditorState, editorInstance }) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const placeHolders = JSON.parse(urlParams.get('placeholders') ?? "[]");
+    
+    return (
+        <Box mx={1} minWidth={200} color="white">
+            <List>
+                {placeHolders.map(key => (
+                    <ListItem key={key} button onClick={() => {
+                        setEditorState(ContentUtils.insertText(editorState, `{{${key}}} `));
+                    }}>
+                        <ListItemText primary={key} />
+                    </ListItem>
+                ))}
+            </List>
+        </Box>
+    );
+}
+
 function unitExportFn(unit, type, target) {
     if (type === "line-height") {
         return unit;
@@ -162,11 +181,27 @@ export const editorConfig = (
             "text-indent",
 
             "separator",
-
-            "line-height",
-            "letter-spacing",
             "undo",
             "redo",
+            "line-height",
+            "letter-spacing",
+            {
+                key: "toolbar-placeholders",
+                type: "component",
+                type: "dropdown",
+                title: "Placeholders",
+                showArrow: true,
+                arrowActive: false,
+                autoHide: true,
+                text: "Placeholders",
+                component: (
+                    <Placeholder
+                    editorState={editorState}
+                    setEditorState={setEditorState}
+                    editorInstance={editorInstance}
+                />
+                )
+            },
             "seperator",
             {
                 key: "toolbar-collapse",
@@ -205,7 +240,7 @@ export const editorConfig = (
                         </IconButton> */}
                     </Tooltip>
                 )
-            }
+            },
         ],
         fontFamilies: FONT_FAMILIES,
         converts: { unitExportFn },
