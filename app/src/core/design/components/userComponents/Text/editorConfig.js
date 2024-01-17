@@ -93,18 +93,18 @@ function FontSize({ editorState, setEditorState, editorInstance }) {
     );
 }
 
-function Placeholder({ editorState, setEditorState, editorInstance }) {
+function Placeholder({ editorState, setEditorState }) {
     const urlParams = new URLSearchParams(window.location.search);
     const placeHolders = JSON.parse(urlParams.get('placeholders') ?? "[]");
     
     return (
         <Box mx={1} minWidth={200} color="white">
             <List>
-                {placeHolders.map(key => (
-                    <ListItem key={key} button onClick={() => {
-                        setEditorState(ContentUtils.insertText(editorState, `{{${key}}} `));
+                {placeHolders.map(({ title, value }) => (
+                    <ListItem key={value} button onClick={() => {
+                        setEditorState(ContentUtils.insertText(editorState, value));
                     }}>
-                        <ListItemText primary={key} />
+                        <ListItemText primary={title} />
                     </ListItem>
                 ))}
             </List>
