@@ -43,7 +43,7 @@ const themeConfigs = [
         palette: {
             type: "light",
             action: {
-                active: colors.blueGrey[600]
+                active: "#a3bc1d"
             },
             background: {
                 default: colors.common.white,
@@ -51,10 +51,10 @@ const themeConfigs = [
                 paper: colors.common.white
             },
             primary: {
-                main: colors.indigo[600]
+                main: "#a3bc1d"
             },
             secondary: {
-                main: "#5850EC"
+                main: "#a3bc1d"
             },
             text: {
                 primary: colors.blueGrey[900],

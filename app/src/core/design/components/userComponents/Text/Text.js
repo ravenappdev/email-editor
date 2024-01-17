@@ -46,9 +46,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: "10px"
     },
     collapseToolbar: {
-        // border: "2px solid black",
-
-        marginTop: "10px"
+        display: "flex",
+        alignItems: "center",
     },
     toolTip: {
         background: "#000000",
@@ -162,7 +161,7 @@ export function Text({ props, style, parentStyle }) {
                     display: !isActive || props.hideToolbar ? "none" : "flex",
                     flexWrap: "wrap",
                     position: "absolute",
-                    width: "700px",
+                    width: "634px",
                     marginTop: `${isCrossingTop ? getPos(dom).height + 20 : -165}px`,
                     marginLeft: `${(350 - getPos(dom).width / 2) * -1}px`,
                     background: "white",

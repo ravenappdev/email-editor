@@ -44,7 +44,7 @@ export const Resizer = ({ children, style, parentStyle, props, craftRef }) => {
                         justifyContent="center"
                         alignItems="center"
                         style={{
-                            border: "thin dashed blue"
+                            border: "thin dashed var(--main-color)"
                         }}
                     >
                         <Typography variant="body2">No content present</Typography>
