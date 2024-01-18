@@ -1,5 +1,3 @@
-import './assets/css/index.css';
-
 import React, { useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { EmailEditor as Designer } from "./core/design/EmailEditor";

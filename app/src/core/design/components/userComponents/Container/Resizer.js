@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useEditor, useNode } from "@craftjs/core";
-import { Box, Grid, Button as MaterialButton, Tooltip } from "@material-ui/core";
+import { Box, Grid, Button as MaterialButton, Tooltip, useTheme } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
 import { ContainerDefaultProps, ContainerSettings } from "./ContainerSettings";
 import { Toolbox } from "../../../utils/Toolbox";
@@ -8,6 +8,7 @@ import { renderNodeUtils } from "../../../utils/renderNodeUtils";
 import AddIcon from "@material-ui/icons/Add";
 
 export const Resizer = ({ children, style, parentStyle, props, craftRef }) => {
+    const theme = useTheme();
     const { id, src } = useNode(node => {
         return { src: node };
     });
@@ -44,7 +45,9 @@ export const Resizer = ({ children, style, parentStyle, props, craftRef }) => {
                         justifyContent="center"
                         alignItems="center"
                         style={{
-                            border: "thin dashed var(--main-color)"
+                            borderWidth: "thin",
+                            borderStyle: "dashed",
+                            borderColor: theme.palette.primary.main,
                         }}
                     >
                         <Typography variant="body2">No content present</Typography>
