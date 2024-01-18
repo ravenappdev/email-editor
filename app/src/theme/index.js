@@ -38,6 +38,11 @@ const themeConfigs = [
                         color: colors.blueGrey[600]
                     }
                 }
+            },
+            MuiButton: {
+                containedPrimary: {
+                    color: colors.common.white,
+                }
             }
         },
         palette: {

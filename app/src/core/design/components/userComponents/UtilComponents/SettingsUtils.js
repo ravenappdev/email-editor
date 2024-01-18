@@ -5,9 +5,10 @@ import {
     Box,
     Slider,
     Button as MaterialButton,
-    Link
+    Link,
+    CircularProgress
 } from "@material-ui/core";
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import { MarginComponent, PaddingComponent } from "./PaddingMargin";
@@ -20,6 +21,8 @@ import { IconButton } from "@material-ui/core";
 import { Tooltip } from "@material-ui/core";
 import YouTubeIcon from "@material-ui/icons/YouTube";
 import LaunchIcon from "@material-ui/icons/Launch";
+import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import { styled } from "@material-ui/styles";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -488,7 +491,66 @@ export function ColorAccordion({ props, setProp, types }) {
     );
 }
 
+const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+});
+
 export function MediaAccordion({ props, setProp, src, type }) {
+    const [isUploading, setIsUploading] = useState(false);
+
+    // Get upload URI from Admin
+    const [uploadUri, token] = useMemo(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        return [urlParams.get("uploadUri"), urlParams.get("token")];
+    }, []);
+
+    const uploadImage = useCallback((files) => {
+        if (files && files.length) {
+            setIsUploading(true);
+            const file = files[0];
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('filename', file.name);
+            formData.append('filesize', file.size);
+            formData.append('filetype', file.type);
+            fetch(uploadUri, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.json();
+                    } else {
+                        throw new Error("File upload failed");
+                    }
+                })
+                .then(data => {
+                    setProp(props => {
+                        props.props.src = data.url;
+                    });
+                })
+                .catch(error => {
+                    console.error("Error uploading file:", error);
+                })
+                .finally(() => {
+                    setIsUploading(false);
+                });
+        }
+    }, [uploadUri, token, setProp]);
+
+    const isAllowUpload = type === "image" && uploadUri?.length > 0 && token?.length > 0;
+
     return (
         <CustomAccordion
             title="Media"
@@ -505,7 +567,29 @@ export function MediaAccordion({ props, setProp, src, type }) {
             }
             children={
                 <>
-                    <Box m={1}>
+                    {isAllowUpload && <Box m={1}>
+                        <Typography variant="subtitle2" color="textSecondary">
+                            Upload image
+                        </Typography>
+                        <MaterialButton
+                            component="label"
+                            color="primary"
+                            variant="contained"
+                            startIcon={isUploading ? null : <CloudUploadIcon />}
+                            style={{ marginTop: 6 }}
+                            disabled={isUploading}
+                        >
+                            {isUploading && <CircularProgress size={20} style={{ marginRight: 8 }}/>}
+                            Choose image
+                            <VisuallyHiddenInput
+                                type="file"
+                                accept="image/*"
+                                multiple={false}
+                                onChange={e => uploadImage(e.target.files)}
+                            />
+                        </MaterialButton>
+                    </Box>}
+                    <Box m={1} mt={2}>
                         <Typography variant="subtitle2" color="textSecondary">
                             Media URL
                         </Typography>
