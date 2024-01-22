@@ -31,7 +31,7 @@ export function Footer({ onPreviewOpen, onHtmlOpen }) {
 
     return (
         <div className={classes.root}>
-            <ButtonGroup size="small" style={{ background: "#546E7A" }}>
+            <ButtonGroup size="small" style={{ background: "#4b4b4b" }}>
                 <MaterialButton
                     title="Undo"
                     onClick={() => {
