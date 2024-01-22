@@ -2,6 +2,7 @@ import { useNode } from "@craftjs/core";
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { VideoDefaultProps, VideoSettings } from "./VideoSettings";
+import { VideoPlaceholder } from "./VideoPlaceholder";
 export const Video = ({ props, style, parentStyle, ...rest }) => {
     const {
         connectors: { connect, drag },
@@ -42,10 +43,7 @@ export const Video = ({ props, style, parentStyle, ...rest }) => {
                     </video>
                 </>
             ) : (
-                <img
-                    style={style}
-                    src={`https://raven-images.s3.ap-south-1.amazonaws.com/images/placeholder_video.jpg`}
-                />
+                <VideoPlaceholder />
             )}
             {/* <VideoThumbnail
                 videoUrl={videoUrl}

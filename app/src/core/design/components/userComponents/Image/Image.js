@@ -2,6 +2,7 @@ import { useNode } from "@craftjs/core";
 import { Grid } from "@material-ui/core";
 import React from "react";
 import { ImageDefaultProps, ImageSettings } from "./ImageSettings";
+import { ImagePlaceholder } from "./ImagePlaceholder";
 
 export const Image = ({ props, style, parentStyle, ...rest }) => {
     const {
@@ -35,7 +36,9 @@ export const Image = ({ props, style, parentStyle, ...rest }) => {
                     pointerEvents: props.path === "#" ? "none" : "auto"
                 }}
             >
-                <img src={props.src} width={style.width} alt={props.altText} style={style} />
+                {props.src === ImageDefaultProps.props.src ? <ImagePlaceholder /> : (
+                    <img src={props.src} width={style.width} alt={props.altText} style={style} />
+                )}
             </a>
         </Grid>
     );

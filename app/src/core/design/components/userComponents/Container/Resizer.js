@@ -37,7 +37,7 @@ export const Resizer = ({ children, style, parentStyle, props, craftRef }) => {
                 ) : (
                     <Box
                         //p={8}
-                        bgcolor="#d9e7ff"
+                        bgcolor={theme.palette.primary.main + "30"}
                         width="100%"
                         minHeight="25vh"
                         display="flex"
