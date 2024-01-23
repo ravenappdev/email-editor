@@ -99,7 +99,7 @@ export const BorderAccordion = withTranslation()(({ t, props, setProp, styleProp
   );
 });
 
-export const SizeAccordion = withTranslation()(({ t, props, setProp, type }) => {
+export const SizeAccordion = withTranslation()(({ t, title, props, setProp, type }) => {
   var size = type === "Width" ? props.style.width : props.style.height;
 
   function getSize() {
@@ -134,7 +134,7 @@ export const SizeAccordion = withTranslation()(({ t, props, setProp, type }) => 
 
   return (
     <CustomAccordion
-      title={type}
+      title={title ?? type}
       preview={
         <Box px={1} bgcolor="#f1f1f1" borderRadius={5}>
           <Typography variant="caption" color="textSecondary">
@@ -436,13 +436,13 @@ export const ColorAccordion = withTranslation()(({ t, props, setProp, types }) =
       title={t("colors")}
       preview={
         <Box display="flex" alignItems="center">
-          {types.map((item, index) => {
-            var ct = getColorType(props, item);
+          {types.map(({ name, value }, index) => {
+            var ct = getColorType(props, value);
             return (
               <CustomColorButton
                 key={index}
                 value={ct.value === undefined ? "" : ct.value}
-                title={ct.name}
+                title={name ?? ct.name}
               />
             );
           })}
@@ -450,8 +450,8 @@ export const ColorAccordion = withTranslation()(({ t, props, setProp, types }) =
       }
       children={
         <Box m={1} display="flex" alignItems="center" justifyContent="space-between">
-          {types.map((item, index) => {
-            var ct = getColorType(props, item);
+          {types.map(({ name, value }, index) => {
+            var ct = getColorType(props, value);
             return (
               <Box key={index}>
                 <Typography
@@ -459,13 +459,13 @@ export const ColorAccordion = withTranslation()(({ t, props, setProp, types }) =
                   color="textSecondary"
                   style={{ marginBottom: 8 }}
                 >
-                  {ct.name}
+                  {name ?? ct.name}
                 </Typography>
                 <CustomColorPicker
                   value={ct.value}
                   onChange={val => {
                     setProp(prop => {
-                      setColorType(prop, val, item);
+                      setColorType(prop, val, value);
                     });
                   }}
                 />

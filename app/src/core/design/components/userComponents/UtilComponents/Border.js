@@ -12,15 +12,19 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function Border({ propKey, propName, setProp, props, styleProp }) {
-  const classes = useStyles();
-  const borderStylesOpts = ["Solid", "Dotted", "Dashed"];
+const Border = withTranslation()(({ t, propKey, propName, setProp, props, styleProp }) => {
+  const borderStylesOpts = [
+    { name: t("solid"), value: "Solid" },
+    { name: t("dotted"), value: "Dotted" },
+    { name: t("dashed"), value: "Dashed" }
+  ];
   const tmp = props[styleProp][propKey];
   let [width, style, color] = typeof tmp === "string" ? [...tmp.split(" ")] : [];
   width = width && width !== "" ? width : "0px";
   style = style && style !== "" ? style : "solid";
   color = color && color !== "" ? color : "#000000";
-  const selectedValue = borderStylesOpts.filter(opts => opts.toLowerCase() === style);
+  const selectedValue = borderStylesOpts.filter(({ value: opts }) => opts.toLowerCase() === style).map(({ name }) => name);
+
   const handleSetProp = () => {
     setProp(props => {
       if (propName === "All Sides") {
@@ -52,10 +56,10 @@ function Border({ propKey, propName, setProp, props, styleProp }) {
         size="small"
         select
       >
-        {borderStylesOpts.map((value, index) => {
+        {borderStylesOpts.map(({ name, value }, index) => {
           return (
             <MenuItem key={index} value={value}>
-              {value}
+              {name ?? value}
             </MenuItem>
           );
         })}
@@ -79,7 +83,7 @@ function Border({ propKey, propName, setProp, props, styleProp }) {
       </Box>
     </Box>
   );
-}
+});
 
 export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp = "style" }) => {
   const classes = useStyles();
@@ -124,6 +128,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
                   setProp={setProp}
                   props={props}
                   styleProp={styleProp}
+                  title={t("top")}
                 />
                 <Box flexGrow={1} />
                 <Border
@@ -132,6 +137,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
                   setProp={setProp}
                   props={props}
                   styleProp={styleProp}
+                  title={t("bottom")}
                 />
               </Box>
               <Box display="flex" alignItems="center">
@@ -141,6 +147,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
                   setProp={setProp}
                   props={props}
                   styleProp={styleProp}
+                  title={t("left")}
                 />
                 <Box flexGrow={1} />
                 <Border
@@ -149,6 +156,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
                   setProp={setProp}
                   props={props}
                   styleProp={styleProp}
+                  title={t("right")}
                 />
               </Box>
             </>
@@ -159,6 +167,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
               setProp={setProp}
               props={props}
               styleProp={styleProp}
+              title={t("allSides")}
             />
           )}
         </Box>

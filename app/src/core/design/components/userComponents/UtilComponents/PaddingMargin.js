@@ -28,7 +28,7 @@ MarginComponent.defaultProps = {
   styleProp: "parentStyle"
 };
 
-function SingleSpacingChange({ propKey, propName, setProp, props, propType, styleProp }) {
+function SingleSpacingChange({ propKey, propName, setProp, props, propType, styleProp, title }) {
   const classes = useStyles();
 
   function getSpacing() {
@@ -61,7 +61,7 @@ function SingleSpacingChange({ propKey, propName, setProp, props, propType, styl
   return (
     <Box my={2} display="flex" flexDirection="column">
       <Typography variant="caption" color="textSecondary">
-        {propName}
+        {title || propName}
       </Typography>
       <GroupedButtons displayProp={getSpacing()} handleChange={handleSetProp} />
     </Box>
@@ -122,6 +122,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
               setProp={setProp}
               props={props}
               styleProp={styleProp}
+              title={t("top")}
             />
             <Box flexGrow={1} />
             <SingleSpacingChange
@@ -131,6 +132,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
               setProp={setProp}
               props={props}
               styleProp={styleProp}
+              title={t("right")}
             />
           </Box>
           <Box display="flex" alignItems="center">
@@ -141,6 +143,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
               setProp={setProp}
               props={props}
               styleProp={styleProp}
+              title={t("bottom")}
             />
             <Box flexGrow={1} />
             <SingleSpacingChange
@@ -150,6 +153,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
               setProp={setProp}
               props={props}
               styleProp={styleProp}
+              title={t("left")}
             />
           </Box>
         </>
@@ -161,6 +165,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
           setProp={setProp}
           props={props}
           styleProp={styleProp}
+          title={t("allSides")}
         />
       )}
     </Box>
