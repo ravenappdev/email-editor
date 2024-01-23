@@ -22,6 +22,7 @@ import LaunchIcon from "@material-ui/icons/Launch";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { styled } from "@material-ui/styles";
 import { withTranslation } from "react-i18next";
+import { imageUpload } from "../../../utils/imageUpload";
 
 export const PaddingAccordion = withTranslation()(({ t, props, setProp, styleProp = "parentStyle" }) => {
   return (
@@ -493,38 +494,29 @@ const VisuallyHiddenInput = styled('input')({
 export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type }) => {
   const [isUploading, setIsUploading] = useState(false);
 
-  // Get upload URI from Admin
-  const [uploadUri, token] = useMemo(() => {
+  // Get upload config from Admin
+  const uploadConfig = useMemo(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    return [urlParams.get("uploadUri"), urlParams.get("token")];
+    return {
+      uploadUri: urlParams.get("uploadUri"),
+      token: urlParams.get("token"),
+      locationId: urlParams.get("locationId"),
+      storageName: urlParams.get("storageName")
+    };
   }, []);
 
   const uploadImage = useCallback((files) => {
     if (files && files.length) {
       setIsUploading(true);
       const file = files[0];
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('filename', file.name);
-      formData.append('filesize', file.size);
-      formData.append('filetype', file.type);
-      fetch(uploadUri, {
-        method: "POST",
-        body: formData,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      })
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error("File upload failed");
+
+      imageUpload(uploadConfig, file)
+        .then(({ errorCode, url }) => {
+          if (errorCode) {
+            throw new Error("Upload return error code: " + errorCode);
           }
-        })
-        .then(data => {
           setProp(props => {
-            props.props.src = data.url;
+            props.props.src = url;
           });
         })
         .catch(error => {
@@ -534,9 +526,9 @@ export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type 
           setIsUploading(false);
         });
     }
-  }, [uploadUri, token, setProp]);
+  }, [uploadConfig, setProp]);
 
-  const isAllowUpload = type === "image" && uploadUri?.length > 0 && token?.length > 0;
+  const isAllowUpload = type === "image" && uploadConfig.uploadUri?.length > 0 && uploadConfig.token?.length > 0;
 
   return (
     <CustomAccordion
