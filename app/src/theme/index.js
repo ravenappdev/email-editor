@@ -1,8 +1,9 @@
 import _ from "lodash";
 import { colors, createTheme as createMuiTheme, responsiveFontSizes } from "@material-ui/core";
 import typography from "./typography";
-import { softShadows, strongShadows } from "./shadows";
+import { softShadows } from "./shadows";
 import { THEMES } from "../context/SettingsContext";
+import base64ToBytes from "../utils/base64ToBytes";
 
 const baseConfig = {
   direction: "ltr",
@@ -26,11 +27,6 @@ const baseConfig = {
     }
   }
 };
-
-function base64ToBytes(base64) {
-  const binString = atob(base64);
-  return Uint8Array.from(binString, (m) => m.codePointAt(0));
-}
 
 const getThemeConfigs = () => {
   const urlParams = new URLSearchParams(window.location.search);

@@ -13,6 +13,7 @@ import {
     AccordionHeader,
     BackgroundAccordion
 } from "../UtilComponents/SettingsUtils";
+import { withTranslation } from "react-i18next";
 import { CustomAccordion } from "../UtilComponents/Accordion";
 import { GroupedButtons } from "../UtilComponents/GroupedButtons";
 import { PADDING, MARGIN, BORDER } from "../Defaults";
@@ -23,7 +24,7 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const ButtonSettings = () => {
+export const ButtonSettings = withTranslation()(({ t }) => {
     const {
         actions: { setProp },
         props
@@ -36,10 +37,10 @@ export const ButtonSettings = () => {
 
     return (
         <div>
-            <AccordionHeader title={"Basic"} />
+            <AccordionHeader title={t("basic")} />
             <ActionAccordion props={props} setProp={setProp} />
             <CustomAccordion
-                title="Text"
+                title={t("text")}
                 preview={
                     <Box px={1} bgcolor="#f1f1f1" borderRadius={5}>
                         <Typography variant="caption" color="textSecondary">
@@ -51,7 +52,7 @@ export const ButtonSettings = () => {
                     <>
                         <Box m={1}>
                             <Typography variant="subtitle2" color="textSecondary">
-                                Button Text
+                                {t("buttonText")}
                             </Typography>
                             <TextField
                                 variant="outlined"
@@ -71,11 +72,11 @@ export const ButtonSettings = () => {
             />
             <ButtonSizeAccordion props={props} setProp={setProp} />
             <ButtonVariantAccordion props={props} setProp={setProp} />
-            <AccordionHeader title={"Spacing"} />
+            <AccordionHeader title={t("spacing")} />
             <AlignmentAccordion props={props} setProp={setProp} />
             <MarginAccordion props={props} setProp={setProp} />
             <PaddingAccordion props={props} setProp={setProp} />
-            <AccordionHeader title={"Decoration"} />
+            <AccordionHeader title={t("decoration")} />
             <BackgroundAccordion
                 props={props}
                 setProp={setProp}
@@ -86,7 +87,7 @@ export const ButtonSettings = () => {
             <ColorAccordion props={props} setProp={setProp} types={["Text", "Button"]} />
         </div>
     );
-};
+});
 
 export const ButtonDefaultProps = {
     props: {

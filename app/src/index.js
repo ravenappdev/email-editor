@@ -8,6 +8,8 @@ import useIsMountedRef from "./hooks/useIsMountedRef";
 import { decodeJson } from "./core/design/utils/encryptJson";
 import ViewPreviewDialog from "./core/design/preview/ViewPreviewDialog";
 import ViewHtmlDialog from "./core/design/preview/ViewHtmlDialog";
+import "./i18n";
+
 const PARENT_URL =
     window.location !== window.parent.location ? document.referrer : document.location.href;
 
