@@ -113,7 +113,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
         />
       </Box>
       {isMore ? (
-        <>
+        <React.Fragment>
           <Box display="flex" alignItems="center">
             <SingleSpacingChange
               propType={propType}
@@ -156,7 +156,7 @@ const SpacingChange = withTranslation()(({ t, props, setProp, propType, stylePro
               title={t("left")}
             />
           </Box>
-        </>
+        </React.Fragment>
       ) : (
         <SingleSpacingChange
           propType={propType}

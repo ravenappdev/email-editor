@@ -105,7 +105,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
   let radius = props[styleProp].borderRadius;
 
   return (
-    <>
+    <React.Fragment>
       <Box justifyContent="center" alignItems="center" m={1}>
         <Box display="flex" alignItems="center" mb={1}>
           <Typography variant="subtitle2" color="textSecondary">
@@ -120,7 +120,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
         </Box>
         <Box>
           {props["borderOptions"] === "more" ? (
-            <>
+            <React.Fragment>
               <Box display="flex" alignItems="center">
                 <Border
                   propKey="borderTop"
@@ -159,7 +159,7 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
                   title={t("right")}
                 />
               </Box>
-            </>
+            </React.Fragment>
           ) : (
             <Border
               propKey="borderTop"
@@ -185,6 +185,6 @@ export const BorderComponent = withTranslation()(({ t, props, setProp, styleProp
           }}
         />
       </Box>
-    </>
+    </React.Fragment>
   );
 });

@@ -1,3 +1,4 @@
+import React from "react";
 import { Box, useTheme } from "@material-ui/core";
 import ImageIcon from "@material-ui/icons/Image";
 

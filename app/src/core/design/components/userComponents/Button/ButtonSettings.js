@@ -39,7 +39,7 @@ export const ButtonSettings = withTranslation()(({ t }) => {
           </Box>
         }
         children={
-          <>
+          <React.Fragment>
             <Box m={1}>
               <Typography variant="subtitle2" color="textSecondary">
                 {t("buttonText")}
@@ -57,7 +57,7 @@ export const ButtonSettings = withTranslation()(({ t }) => {
                 margin="dense"
               />
             </Box>
-          </>
+          </React.Fragment>
         }
       />
       <ButtonSizeAccordion props={props} setProp={setProp} />

@@ -23,6 +23,7 @@ import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import { styled } from "@material-ui/styles";
 import { withTranslation } from "react-i18next";
 import { imageUpload } from "../../../utils/imageUpload";
+import useUpload from "../../../../../hooks/useUpload";
 
 export const PaddingAccordion = withTranslation()(({ t, props, setProp, styleProp = "parentStyle" }) => {
   return (
@@ -193,7 +194,7 @@ export const ActionAccordion = withTranslation()(({ t, props, setProp }) => {
         </Tooltip>
       }
       children={
-        <>
+        <React.Fragment>
           <Box m={1}>
             <Typography variant="subtitle2" color="textSecondary">
               {t("clickUrl")}
@@ -240,7 +241,7 @@ export const ActionAccordion = withTranslation()(({ t, props, setProp }) => {
               </MenuItem>
             </TextField>
           </Box>
-        </>
+        </React.Fragment>
       }
     />
   );
@@ -306,7 +307,7 @@ export const BackgroundAccordion = withTranslation()(({ t, props, setProp, isSel
         )
       }
       children={
-        <>
+        <React.Fragment>
           {
             <Box display="flex" alignItems="center" m={1}>
               <Typography
@@ -365,7 +366,7 @@ export const BackgroundAccordion = withTranslation()(({ t, props, setProp, isSel
               />
             </Box>
           )}
-        </>
+        </React.Fragment>
       }
     />
   );
@@ -493,24 +494,14 @@ const VisuallyHiddenInput = styled('input')({
 
 export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type }) => {
   const [isUploading, setIsUploading] = useState(false);
-
-  // Get upload config from Admin
-  const uploadConfig = useMemo(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return {
-      uploadUri: urlParams.get("uploadUri"),
-      token: urlParams.get("token"),
-      locationId: urlParams.get("locationId"),
-      storageName: urlParams.get("storageName")
-    };
-  }, []);
+  const { uploader } = useUpload();
 
   const uploadImage = useCallback((files) => {
     if (files && files.length) {
       setIsUploading(true);
       const file = files[0];
 
-      imageUpload(uploadConfig, file)
+      uploader(file)
         .then(({ errorCode, url }) => {
           if (errorCode) {
             throw new Error("Upload return error code: " + errorCode);
@@ -526,9 +517,9 @@ export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type 
           setIsUploading(false);
         });
     }
-  }, [uploadConfig, setProp]);
+  }, [setProp]);
 
-  const isAllowUpload = type === "image" && uploadConfig.uploadUri?.length > 0 && uploadConfig.token?.length > 0;
+  const isAllowUpload = type === "image" && uploader;
 
   return (
     <CustomAccordion
@@ -545,7 +536,7 @@ export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type 
         </Tooltip>
       }
       children={
-        <>
+        <React.Fragment>
           {isAllowUpload && <Box m={1}>
             <Typography variant="subtitle2" color="textSecondary">
               {t("uploadImage")}
@@ -603,7 +594,7 @@ export const MediaAccordion = withTranslation()(({ t, props, setProp, src, type 
               margin="dense"
             />
           </Box>
-        </>
+        </React.Fragment>
       }
     />
   );

@@ -36,7 +36,7 @@ export const ButtonSizeAccordion = withTranslation()(({ t, props, setProp }) => 
         </Box>
       }
       children={
-        <>
+        <React.Fragment>
           <Box m={1} style={myStyle.box}>
             <Select
               labelId="demo-simple-select-label"
@@ -65,7 +65,7 @@ export const ButtonSizeAccordion = withTranslation()(({ t, props, setProp }) => 
               {props.style.size}
             </MaterialButton>
           </Box>
-        </>
+        </React.Fragment>
       }
     />
   );
@@ -95,7 +95,7 @@ export const ButtonVariantAccordion = withTranslation()(({ t, props, setProp }) 
         </Box>
       }
       children={
-        <>
+        <React.Fragment>
           <Box m={1} style={myStyle.box}>
             <Select
               labelId="demo-simple-select-label"
@@ -124,7 +124,7 @@ export const ButtonVariantAccordion = withTranslation()(({ t, props, setProp }) 
               {props.style.variant == "text" ? "default" : props.style.variant}
             </MaterialButton>
           </Box>
-        </>
+        </React.Fragment>
       }
     />
   );

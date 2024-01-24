@@ -214,10 +214,10 @@ export const RenderNode = withTranslation()(({ t, render }) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       {(isHover || isActive) && id !== ROOT_NODE
         ? ReactDOM.createPortal(
-          <>
+          <React.Fragment>
             {isActive && id != ROOT_NODE && name !== "Main" && (
               <IndicatorDiv
                 ref={currentRef}
@@ -236,9 +236,9 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                   width: "fit-content"
                 }}
               >
-                <>
+                <React.Fragment>
                   {moveable && (
-                    <>
+                    <React.Fragment>
                       <Tooltip arrow title={t("moveUp") + " (Shift + ↑)"}>
                         <IconButton
                           className={classes.indicatorIcons}
@@ -257,7 +257,7 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                           <ArrowDownwardIcon />
                         </IconButton>
                       </Tooltip>
-                    </>
+                    </React.Fragment>
                   )}
 
                   <Tooltip arrow title={t("selectParent")}>
@@ -310,7 +310,7 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                       </IconButton>
                     </Tooltip>
                   )}
-                </>
+                </React.Fragment>
               </IndicatorDiv>
             )}
             {(isActive || isHover) && (
@@ -342,7 +342,7 @@ export const RenderNode = withTranslation()(({ t, render }) => {
               </IndicatorDiv>
             )}
             {isActive && id != ROOT_NODE && name !== "Main" && (
-              <>
+              <React.Fragment>
                 <Tooltip arrow title={t("addContentAbove")} placement="top">
                   <IndicatorDiv
                     ref={currentRef}
@@ -413,11 +413,11 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                     <AddIcon />
                   </IndicatorDiv>
                 </Tooltip>
-              </>
+              </React.Fragment>
             )}
             {dom && id !== ROOT_NODE && (
-              <>
-                <>
+              <React.Fragment>
+                <React.Fragment>
                   {border({
                     top: 27,
                     left: 0,
@@ -425,8 +425,8 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                     height: 0,
                     name: "top"
                   })}
-                </>
-                <>
+                </React.Fragment>
+                <React.Fragment>
                   {border({
                     bottom: 0,
                     left: 0,
@@ -434,8 +434,8 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                     height: 0,
                     name: "bottom"
                   })}
-                </>
-                <>
+                </React.Fragment>
+                <React.Fragment>
                   {border({
                     top: 27,
                     bottom: 0,
@@ -444,8 +444,8 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                     height: "100%",
                     name: "left"
                   })}
-                </>
-                <>
+                </React.Fragment>
+                <React.Fragment>
                   {border({
                     top: 27,
                     right: 0,
@@ -453,8 +453,8 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                     height: "100%",
                     name: "right"
                   })}
-                </>
-              </>
+                </React.Fragment>
+              </React.Fragment>
             )}
 
             <Toolbox
@@ -470,11 +470,11 @@ export const RenderNode = withTranslation()(({ t, render }) => {
                 setPopOverAnchorEl(null);
               }}
             />
-          </>,
+          </React.Fragment>,
           dom
         )
         : null}
       {render}
-    </>
+    </React.Fragment>
   );
 });

@@ -52,7 +52,7 @@ function Columns({ t, type, handleColumns, props }) {
   }
 
   return (
-    <>
+    <React.Fragment>
       <MaterialButton
         onClick={() => {
           if (props.props.containerType !== type) {
@@ -104,7 +104,7 @@ function Columns({ t, type, handleColumns, props }) {
           content={cnfContent}
         />
       )}
-    </>
+    </React.Fragment>
   );
 }
 
@@ -187,7 +187,7 @@ export const ContainerSettings = withTranslation()(({ t }) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       <AccordionHeader title={t("basic")} />
       <CustomAccordion
         title={t("columns")}
@@ -200,7 +200,7 @@ export const ContainerSettings = withTranslation()(({ t }) => {
           </Box>
         }
         children={
-          <>
+          <React.Fragment>
             <Box
               display="flex"
               alignItems="center"
@@ -217,7 +217,7 @@ export const ContainerSettings = withTranslation()(({ t }) => {
               <Box flexGrow={1} />
               <Columns type={4} handleColumns={handleColumns} props={props} t={t} />
             </Box>
-          </>
+          </React.Fragment>
         }
       />
       {props.props.containerType > 1 && (
@@ -225,7 +225,7 @@ export const ContainerSettings = withTranslation()(({ t }) => {
           title={t("columnProperties")}
           defaultExpanded={true}
           children={
-            <>
+            <React.Fragment>
               <Tabs
                 value={tabValue}
                 onChange={handleTabs}
@@ -241,12 +241,12 @@ export const ContainerSettings = withTranslation()(({ t }) => {
               </Tabs>
 
               <ResizerSettings id={getNodeId(tabValue)} />
-            </>
+            </React.Fragment>
           }
         />
       )}
       <ResizerSettings id={id} isParent={true} />
-    </>
+    </React.Fragment>
   );
 });
 

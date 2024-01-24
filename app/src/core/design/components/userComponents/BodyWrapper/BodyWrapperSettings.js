@@ -12,7 +12,7 @@ export const BodyWrapperSettings = withTranslation()(({ t }) => {
   }));
 
   return (
-    <>
+    <React.Fragment>
       <AccordionHeader title={t("decoration")} />
       <BackgroundAccordion
         props={props}
@@ -20,7 +20,7 @@ export const BodyWrapperSettings = withTranslation()(({ t }) => {
         isSelfBg={true}
         defaultImage={BodyWrapperDefaultProps.style.backgroundImage}
       />
-    </>
+    </React.Fragment>
   );
 });
 

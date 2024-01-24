@@ -34,7 +34,7 @@ export const Resizer = ({ children, style, parentStyle, props, craftRef }) => {
         alignItems={props.alignItems}
       >
         {children && children.props && children.props.children ? (
-          <>{children}</>
+          <React.Fragment>{children}</React.Fragment>
         ) : (
           <Box
             //p={8}

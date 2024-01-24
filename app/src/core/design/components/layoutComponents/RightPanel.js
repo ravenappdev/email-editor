@@ -42,7 +42,7 @@ export const RightPanel = withTranslation()(({ t, ...rest }) => {
     rootNode && rootNode.related && rootNode.related.settings ? (
       React.createElement(rootNode.related.settings)
     ) : (
-      <></>
+      <React.Fragment></React.Fragment>
     );
 
   return (
@@ -55,7 +55,7 @@ export const RightPanel = withTranslation()(({ t, ...rest }) => {
         {selected && selected.settings ? (
           React.createElement(selected.settings)
         ) : (
-          <>{BodySettings}</>
+          <React.Fragment>{BodySettings}</React.Fragment>
         )}
       </div>
     </Box>

@@ -52,7 +52,7 @@ export const ResizerSettings = withTranslation()(({ t, id, isParent }) => {
   };
 
   return (
-    <>
+    <React.Fragment>
       {isParent && <AccordionHeader title={t("spacing")} />}
       <MarginAccordion props={props} setProp={handleSetProp} />
       <PaddingAccordion props={props} setProp={handleSetProp} />
@@ -64,6 +64,6 @@ export const ResizerSettings = withTranslation()(({ t, id, isParent }) => {
         defaultImage={ContainerDefaultProps.style.backgroundImage}
       />
       <BorderAccordion props={props} setProp={handleSetProp} />
-    </>
+    </React.Fragment>
   );
 });
