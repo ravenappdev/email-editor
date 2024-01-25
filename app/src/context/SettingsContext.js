@@ -1,7 +1,6 @@
 import React, { createContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { storeSettings } from "../utils/settings";
 
 export const THEMES = {
   LIGHT: 'LIGHT',
@@ -13,40 +12,46 @@ export const THEMES = {
 const SettingsContext = createContext();
 
 const defaultSettings = {
-    direction: "ltr",
-    responsiveFontSizes: true,
-    theme: THEMES.LIGHT
+  direction: "ltr",
+  responsiveFontSizes: true,
+  theme: THEMES.LIGHT,
+  editor: {
+    placeholders: [],
+  }
 };
 
 export function SettingsProvider({ settings, children }) {
-    const [currentSettings, setCurrentSettings] = useState(settings || defaultSettings);
+  const [currentSettings, setCurrentSettings] = useState({
+    ...defaultSettings,
+    theme: settings.theme ?? defaultSettings.theme,
+    editor: settings.editor ?? defaultSettings.editor,
+  });
 
-    const handleSaveSettings = (updatedSettings = {}) => {
-        const mergedSettings = _.merge({}, currentSettings, updatedSettings);
+  const handleSaveSettings = (updatedSettings = {}) => {
+    const mergedSettings = _.merge({}, currentSettings, updatedSettings);
 
-        setCurrentSettings(mergedSettings);
-        storeSettings(mergedSettings);
-    };
+    setCurrentSettings(mergedSettings);
+  };
 
-    useEffect(() => {
-        document.dir = currentSettings.direction;
-    }, [currentSettings]);
+  useEffect(() => {
+    document.dir = currentSettings.direction;
+  }, [currentSettings]);
 
-    return (
-        <SettingsContext.Provider
-            value={{
-                settings: currentSettings,
-                saveSettings: handleSaveSettings
-            }}
-        >
-            {children}
-        </SettingsContext.Provider>
-    );
+  return (
+    <SettingsContext.Provider
+      value={{
+        settings: currentSettings,
+        saveSettings: handleSaveSettings
+      }}
+    >
+      {children}
+    </SettingsContext.Provider>
+  );
 }
 
 SettingsProvider.propTypes = {
-    children: PropTypes.node.isRequired,
-    settings: PropTypes.object
+  children: PropTypes.node.isRequired,
+  settings: PropTypes.object
 };
 
 export const SettingsConsumer = SettingsContext.Consumer;

@@ -23,7 +23,7 @@ export function Header({}) {
   const classes = useStyles();
 
   return (
-    <>
+    <React.Fragment>
       <AppBar className={classes.appBar} elevation={5}>
         <Toolbar>
           <Box display="flex" alignItems="center">
@@ -44,6 +44,6 @@ export function Header({}) {
         </Toolbar>
       </AppBar>
       {/* {cnfOpen && <ConfirmationDialog {...cnfArgs} />} */}
-    </>
+    </React.Fragment>
   );
 }

@@ -80,9 +80,9 @@ function Laptop({ children }) {
 
 export function HtmlPreview({ className, html, format, ...rest }) {
     return (
-        <>
+        <React.Fragment>
             {format !== "browser" && (
-                <>
+                <React.Fragment>
                     {format === "mobile" && (
                         <div className="marvel-device iphone-x">
                             <div class="notch">
@@ -116,11 +116,11 @@ export function HtmlPreview({ className, html, format, ...rest }) {
                             <iframe frameBorder={0} srcDoc={html} width="100%" height="100%" />
                         </Laptop>
                     )}
-                </>
+                </React.Fragment>
             )}
             {format === "browser" && (
                 <iframe frameBorder={0} srcDoc={html} width="100%" height="100%" />
             )}
-        </>
+        </React.Fragment>
     );
 }
