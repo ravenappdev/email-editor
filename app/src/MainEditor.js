@@ -1,8 +1,24 @@
+import "braft-editor/dist/index.css";
+import "braft-extensions/dist/color-picker.css";
+
 import React, { forwardRef, useCallback, useEffect, useImperativeHandle } from "react";
+import { createGenerateClassName, jssPreset, makeStyles, StylesProvider, ThemeProvider } from "@material-ui/core";
+import { create } from "jss";
+import rtl from "jss-rtl";
 import { EmailEditor as Designer } from "./core/design/EmailEditor";
 import { decodeJson } from "./core/design/utils/encryptJson";
 import ViewPreviewDialog from "./core/design/preview/ViewPreviewDialog";
 import ViewHtmlDialog from "./core/design/preview/ViewHtmlDialog";
+import useSettings from "./hooks/useSettings";
+import { createTheme } from "./theme";
+const useStyles = makeStyles(() => ({
+  root: {}
+}));
+
+const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
+const generateClassName = createGenerateClassName({
+  seed: "EmailEditor"
+});
 
 export default forwardRef((
   {
@@ -12,6 +28,8 @@ export default forwardRef((
   },
   ref
 ) => {
+  useStyles();
+  const { settings } = useSettings();
   const [state, setState] = React.useState(null);
   const [triggerFetchState, setTriggerFetchState] = React.useState(false);
   const [previewState, setPreviewState] = React.useState(null);
@@ -77,20 +95,22 @@ export default forwardRef((
   };
 
   return (
-    <React.Fragment>
-      <Designer
-        loadState={state?.["json"] ?? {}}
-        loadVersion={state?.["version"] ?? ""}
-        triggerFetchState={triggerFetchState}
-        getState={getState}
-        onPreviewOpen={onPreviewOpen}
-        onHtmlOpen={onHtmlOpen}
-      />
-      {mode === "preview" && (
-        <ViewPreviewDialog previewDoc={previewState} onClose={onClose} title="Preview" />
-      )}
-      {mode === "html" && <ViewHtmlDialog html={htmlState} onClose={onClose} />}
-    </React.Fragment>
+    <ThemeProvider theme={createTheme(settings)}>
+      <StylesProvider generateClassName={generateClassName} jss={jss}>
+        <Designer
+          loadState={state?.["json"] ?? undefined}
+          loadVersion={state?.["version"] ?? ""}
+          triggerFetchState={triggerFetchState}
+          getState={getState}
+          onPreviewOpen={onPreviewOpen}
+          onHtmlOpen={onHtmlOpen}
+        />
+        {mode === "preview" && (
+          <ViewPreviewDialog previewDoc={previewState} onClose={onClose} title="Preview" />
+        )}
+        {mode === "html" && <ViewHtmlDialog html={htmlState} onClose={onClose} />}
+      </StylesProvider>
+    </ThemeProvider>
   )
 });
 

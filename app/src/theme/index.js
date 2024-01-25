@@ -42,8 +42,24 @@ const getThemeConfigs = (theme) => {
       MuiButton: {
         containedPrimary: {
           color: colors.common.white,
+        },
+      },
+      MuiTypography: {
+        subtitle2: {
+          fontWeight: "normal",
+        },
+        h4: {
+          fontWeight: "normal",
+        },
+        h5: {
+          fontWeight: "normal",
         }
-      }
+      },
+      MuiOutlinedInput: {
+        notchedOutline: {
+          display: "block !important",
+        }
+      },
     },
     palette: {
       type: "light",
@@ -66,7 +82,11 @@ const getThemeConfigs = (theme) => {
         secondary: colors.blueGrey[600]
       }
     },
-    shadows: softShadows
+    shadows: softShadows,
+    typography: {
+      htmlFontSize: 10,
+
+    }
   };
 };
 
@@ -75,16 +95,12 @@ export function createTheme(settings = {}) {
 
   if (!themeConfig) {
     console.warn(new Error(`The theme ${settings.theme?.theme} is not valid`));
-    [themeConfig] = getThemeConfigs();
+    themeConfig = getThemeConfigs();
   }
 
   let theme = createMuiTheme(
     _.merge({}, baseConfig, themeConfig, { direction: settings.direction })
   );
-
-  if (settings.responsiveFontSizes) {
-    theme = responsiveFontSizes(theme);
-  }
 
   return theme;
 }

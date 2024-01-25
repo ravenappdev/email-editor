@@ -12,11 +12,12 @@ export const Container = ({ children, style, parentStyle, props }) => {
   } = useNode(node => {
     return {};
   });
+
   return (
     <Resizer craftRef={connect} style={style} parentStyle={parentStyle} props={props}>
       {type > 1 ? (
         <React.Fragment>
-          {[...Array(type)].map((e, i) => {
+          {Array.from(Array(type).keys()).map((e, i) => {
             return (
               <Grid item key={i} xs={w}>
                 <Element

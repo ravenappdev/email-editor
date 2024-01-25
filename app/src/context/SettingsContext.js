@@ -14,11 +14,18 @@ const SettingsContext = createContext();
 const defaultSettings = {
   direction: "ltr",
   responsiveFontSizes: true,
-  theme: THEMES.LIGHT
+  theme: THEMES.LIGHT,
+  editor: {
+    placeholders: [],
+  }
 };
 
 export function SettingsProvider({ settings, children }) {
-  const [currentSettings, setCurrentSettings] = useState({ ...defaultSettings, theme: settings.theme ?? defaultSettings.theme });
+  const [currentSettings, setCurrentSettings] = useState({
+    ...defaultSettings,
+    theme: settings.theme ?? defaultSettings.theme,
+    editor: settings.editor ?? defaultSettings.editor,
+  });
 
   const handleSaveSettings = (updatedSettings = {}) => {
     const mergedSettings = _.merge({}, currentSettings, updatedSettings);

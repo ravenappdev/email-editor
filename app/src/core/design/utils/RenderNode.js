@@ -155,7 +155,10 @@ export const RenderNode = withTranslation()(({ t, render }) => {
     function () {
       document.querySelector(".craftjs-renderer").addEventListener("scroll", scroll);
       return function () {
-        document.querySelector(".craftjs-renderer").removeEventListener("scroll", scroll);
+        const craftjs = document.querySelector(".craftjs-renderer");
+        if (craftjs) {
+          craftjs.removeEventListener("scroll", scroll);
+        }
       };
     },
     [scroll]

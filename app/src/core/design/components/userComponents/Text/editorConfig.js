@@ -6,228 +6,184 @@ import { Box, List, ListItem, ListItemText, Tooltip } from "@material-ui/core";
 import { GroupedButtons } from "../UtilComponents";
 import { Button } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
+import useSettings from "../../../../../hooks/useSettings";
 
 const FONT_FAMILIES = [
-    {
-        name: "Default Font",
-        family:
-            "-apple-system,BlinkMacSystemFont,‘Segoe UI’,Roboto,Helvetica,Arial,sans-serif,‘Apple Color Emoji’,‘Segoe UI Emoji’,‘Segoe UI Symbol’"
-    }
+  {
+    name: "Default Font",
+    family:
+      "-apple-system,BlinkMacSystemFont,‘Segoe UI’,Roboto,Helvetica,Arial,sans-serif,‘Apple Color Emoji’,‘Segoe UI Emoji’,‘Segoe UI Symbol’"
+  }
 ];
-// export function FontFamily({ editorState, setEditorState, editorInstance }) {
-//     const [anchorEl, setAnchorEl] = React.useState(null);
-//     const theme = useTheme();
-//     const getCurFontFamily = () => {
-//         let fontFamily = FONT_FAMILIES[0].name;
-//         for (let item of FONT_FAMILIES) {
-//             if (ContentUtils.selectionHasInlineStyle(editorState, `FONTFAMILY-${item.name}`)) {
-//                 fontFamily = item.name;
-//                 break;
-//             }
-//         }
 
-//         return fontFamily;
-//     };
-//     console.log(editorState.getCurrentInlineStyle());
-//     return (
-//         <>
-//             <TextField
-//                 variant="filled"
-//                 value={getCurFontFamily()}
-//                 onChange={e => {
-//                     e.persist();
-//                     editorInstance.current.setValue(
-//                         ContentUtils.toggleSelectionFontFamily(editorState, e.target.value)
-//                     );
-//                     editorInstance.current.requestFocus();
-//                 }}
-//                 fullWidth
-//                 margin="dense"
-//                 select
-//             >
-//                 {FONT_FAMILIES.map((val, i) => {
-//                     return (
-//                         <MenuItem key={i} value={val.name} style={{ fontFamily: val.family }}>
-//                             {val.name}
-//                         </MenuItem>
-//                     );
-//                 })}
-//             </TextField>
-//         </>
-//     );
-// }
-// const hooks = {
-//     "toggle-font-size": prop => {
-//         console.log(prop);
-//         return `calc(${prop} / var(--size-divisor))`;
-//     }
-// };
 function FontSize({ editorState, setEditorState, editorInstance }) {
-    const getCurFontSize = () => {
-        let fontSize = 16;
-        for (let i = 0; i < 144; i++) {
-            if (ContentUtils.selectionHasInlineStyle(editorState, `FONTSIZE-${i}`)) {
-                fontSize = i;
+  const getCurFontSize = () => {
+    let fontSize = 16;
+    for (let i = 0; i < 144; i++) {
+      if (ContentUtils.selectionHasInlineStyle(editorState, `FONTSIZE-${i}`)) {
+        fontSize = i;
 
-                break;
-            }
-        }
+        break;
+      }
+    }
 
-        return fontSize;
-    };
+    return fontSize;
+  };
 
-    const handleChange = newValue => {
-        editorInstance.current.setValue(
-            ContentUtils.toggleSelectionFontSize(editorState, `${newValue}`)
-        );
-    };
-
-    return (
-        <Box mx={1}>
-            <GroupedButtons
-                displayProp={getCurFontSize()}
-                handleChange={handleChange}
-                mode={"int"}
-            />
-        </Box>
+  const handleChange = newValue => {
+    editorInstance.current.setValue(
+      ContentUtils.toggleSelectionFontSize(editorState, `${newValue}`)
     );
+  };
+
+  return (
+    <Box mx={1}>
+      <GroupedButtons
+        displayProp={getCurFontSize()}
+        handleChange={handleChange}
+        mode={"int"}
+      />
+    </Box>
+  );
 }
 
-function Placeholder({ editorState, setEditorState }) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const placeHolders = JSON.parse(urlParams.get('placeholders') ?? "[]");
-    
-    return (
-        <Box mx={1} minWidth={200} color="white">
-            <List>
-                {placeHolders.map(({ title, value }) => (
-                    <ListItem key={value} button onClick={() => {
-                        setEditorState(ContentUtils.insertText(editorState, value));
-                    }}>
-                        <ListItemText primary={title} />
-                    </ListItem>
-                ))}
-            </List>
-        </Box>
-    );
+function Placeholder({ editorState, setEditorState, editorInstance }) {
+  const { settings } = useSettings();
+  const placeholders = settings?.editor?.placeholders ?? [];
+
+  return (
+    <Box mx={1} minWidth={200} color="white">
+      <List>
+        {placeholders.map(({ title, value }) => (
+          <ListItem key={value} button onClick={() => {
+            editorInstance.current.setValue(
+              ContentUtils.insertText(editorState, value)
+            );
+          }}>
+            <ListItemText primary={title} />
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
 }
 
 function unitExportFn(unit, type, target) {
-    if (type === "line-height") {
-        return unit;
-    }
-    return `${unit / 16}em`;
+  if (type === "line-height") {
+    return unit;
+  }
+  return `${unit / 16}em`;
 }
 
 export const editorConfig = (
-    editorState,
-    setEditorState,
-    classes,
-    editorInstance,
-    setProp,
-    theme
+  editorState,
+  setEditorState,
+  classes,
+  editorInstance,
+  setProp,
+  theme
 ) => {
-    return {
-        language: (languages, context) => {
-            if (context === "braft-editor") {
-                languages.en.controls.clear = "Empty";
-                return languages.en;
-            }
-        },
-        controls: [
-            "headings",
-            // "font-family",
+  return {
+    language: (languages, context) => {
+      if (context === "braft-editor") {
+        languages.en.controls.clear = "Empty";
+        return languages.en;
+      }
+    },
+    controls: [
+      "headings",
+      // "font-family",
 
-            {
-                key: "font-size",
-                type: "component",
-                className: classes.fontSize,
+      {
+        key: "font-size",
+        type: "component",
+        className: classes.fontSize,
 
-                component: (
-                    <FontSize
-                        editorState={editorState}
-                        setEditorState={setEditorState}
-                        editorInstance={editorInstance}
-                    />
-                )
-            },
+        component: (
+          <FontSize
+            editorState={editorState}
+            setEditorState={setEditorState}
+            editorInstance={editorInstance}
+          />
+        )
+      },
 
-            "separator",
+      "separator",
 
-            "bold",
-            "italic",
-            "underline",
-            "text-color",
-            "strike-through",
-            "superscript",
-            "subscript",
+      "bold",
+      "italic",
+      "underline",
+      "text-color",
+      "strike-through",
+      "superscript",
+      "subscript",
 
-            "separator",
+      "separator",
 
-            "text-align",
+      "text-align",
 
-            "separator",
+      "separator",
 
-            "link",
-            "list-ul",
-            `list-ol`,
-            "blockquote",
-            "hr",
+      "link",
+      "list-ul",
+      `list-ol`,
+      "blockquote",
+      "hr",
 
-            "separator",
+      "separator",
 
-            "remove-styles",
-            "emoji",
-            "text-indent",
+      "remove-styles",
+      "emoji",
+      "text-indent",
 
-            "separator",
-            "undo",
-            "redo",
-            "line-height",
-            "letter-spacing",
-            {
-                key: "toolbar-placeholders",
-                type: "component",
-                type: "dropdown",
-                title: "Placeholders",
-                showArrow: true,
-                arrowActive: false,
-                autoHide: true,
-                text: "Placeholders",
-                component: (
-                    <Placeholder
-                    editorState={editorState}
-                    setEditorState={setEditorState}
-                    editorInstance={editorInstance}
-                />
-                )
-            },
-            "seperator",
-            {
-                key: "toolbar-collapse",
-                type: "component",
-                className: classes.collapseToolbar,
+      "separator",
+      "undo",
+      "redo",
+      "line-height",
+      "letter-spacing",
+      {
+        key: "toolbar-placeholders",
+        type: "component",
+        type: "dropdown",
+        title: "Placeholders",
+        showArrow: true,
+        arrowActive: false,
+        autoHide: true,
+        text: "Placeholders",
+        component: (
+          <Placeholder
+            editorState={editorState}
+            setEditorState={setEditorState}
+            editorInstance={editorInstance}
+          />
+        )
+      },
+      "seperator",
+      {
+        key: "toolbar-collapse",
+        type: "component",
+        className: classes.collapseToolbar,
 
-                component: (
-                    <Tooltip
-                        title="Close Toolbar"
-                        arrow
-                        classes={{ tooltip: classes.toolTip, arrow: classes.toolTipArrow }}
-                    >
-                        <Button
-                            style={{
-                                color: theme.palette.text.secondary
-                            }}
-                            onClick={() => {
-                                setProp(props => {
-                                    props.props.hideToolbar = true;
-                                });
-                                editorInstance.current.draftInstance.blur();
-                            }}
-                        >
-                            <Typography variant="caption">Close</Typography>
-                        </Button>
-                        {/* <IconButton
+        component: (
+          <Tooltip
+            title="Close Toolbar"
+            arrow
+            classes={{ tooltip: classes.toolTip, arrow: classes.toolTipArrow }}
+          >
+            <Button
+              style={{
+                color: theme.palette.text.secondary
+              }}
+              onClick={() => {
+                setProp(props => {
+                  props.props.hideToolbar = true;
+                });
+                editorInstance.current.draftInstance.blur();
+              }}
+            >
+              <Typography variant="caption">Close</Typography>
+            </Button>
+            {/* <IconButton
                             onClick={() => {
                                 setProp(props => {
                                     props.props.hideToolbar = true;
@@ -238,12 +194,12 @@ export const editorConfig = (
                         >
                             <HighlightOffIcon fontSize="small" />
                         </IconButton> */}
-                    </Tooltip>
-                )
-            },
-        ],
-        fontFamilies: FONT_FAMILIES,
-        converts: { unitExportFn },
-        placeHolder: "Text"
-    };
+          </Tooltip>
+        )
+      },
+    ],
+    fontFamilies: FONT_FAMILIES,
+    converts: { unitExportFn },
+    placeHolder: "Text"
+  };
 };

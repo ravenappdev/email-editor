@@ -1,6 +1,7 @@
 import { useNode } from "@craftjs/core";
 import { Box } from "@material-ui/core";
 import React from "react";
+import { withTranslation } from "react-i18next";
 import { makeStyles } from "@material-ui/core/styles";
 import Typography from "@material-ui/core/Typography";
 import {
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export const DividerSettings = () => {
+export const DividerSettings = withTranslation()(({ t }) => {
   const {
     actions: { setProp },
     props,
@@ -34,12 +35,11 @@ export const DividerSettings = () => {
   } = useNode(node => ({
     props: node.data.props
   }));
-  const classes = useStyles();
 
   var height = props.style.height;
   return (
     <div>
-      <AccordionHeader title={"Size"} />
+      <AccordionHeader title={t("size")} />
       <CustomAccordion
         title={t("thickness")}
         preview={
@@ -75,7 +75,7 @@ export const DividerSettings = () => {
       <ColorAccordion props={props} setProp={setProp} types={[{ name: t("divider"), value: "Divider" }]} />
     </div>
   );
-};
+});
 
 export const DividerDefaultProps = {
   style: {

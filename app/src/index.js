@@ -4,7 +4,7 @@ import MainEditor from "./MainEditor";
 import { initializeI18n } from "./i18n";
 import { UploadProvider } from "./context/UploadProvider";
 
-export const SmartEmailEditor = forwardRef(({ translation, onFileUpload, ...props }, ref) => {
+export const SmartEmailEditor = forwardRef(({ translation, placeholders, onFileUpload, ...props }, ref) => {
   initializeI18n(translation);
   const editorRef = useRef(null);
 
@@ -20,6 +20,9 @@ export const SmartEmailEditor = forwardRef(({ translation, onFileUpload, ...prop
     <SettingsProvider
       settings={{
         theme: props.theme,
+        editor: {
+          placeholders,
+        }
       }}
     >
       <UploadProvider uploader={onFileUpload}>
